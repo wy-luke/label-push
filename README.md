@@ -1,4 +1,4 @@
-# tag-push README
+# Tag Push extension for Visual Studio Code
 
 **Tag Push** could add some specific words, as a tag, to your latest commit's message when you `push`.
 
