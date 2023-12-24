@@ -3,7 +3,7 @@
   "displayName": "Tag Push",
   "description": "Add a tag to your latest commit message and then push.",
   "publisher": "wy-luke",
-  "version": "0.0.1",
+  "icon": "resources/icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -16,7 +16,11 @@
     "commands": [
       {
         "command": "tag-push.tagPush",
-        "title": "Tag Push"
+        "title": "Tag Push",
+        "icon": {
+          "light": "resources/cmd-icon-light.svg",
+          "dark": "resources/cmd-icon-dark.svg"
+        }
       }
     ]
   },
