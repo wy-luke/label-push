@@ -22,7 +22,21 @@
           "dark": "resources/cmd-icon-dark.svg"
         }
       }
-    ]
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "when": "scmProvider == git",
+          "command": "tag-push.tagPush",
+          "group": "navigation"
+        },
+        {
+          "when": "scmProvider == git",
+          "command": "tag-push.tagPush",
+          "group": "inline"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run compile",
