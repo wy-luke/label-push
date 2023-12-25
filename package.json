@@ -47,6 +47,16 @@
           "group": "inline"
         }
       ]
+    },
+    "configuration": {
+      "title": "Tag Push",
+      "properties": {
+        "tag-push.tag": {
+          "type": "string",
+          "default": "[build]",
+          "description": "The string added to the commit message, aka the tag."
+        }
+      }
     }
   },
   "scripts": {

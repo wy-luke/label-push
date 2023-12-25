@@ -77,8 +77,10 @@ export function activate(context: vscode.ExtensionContext) {
         );
       }
 
+      const config = vscode.workspace.getConfiguration("tag-push");
+
       terminal.sendText(
-        `git commit --amend -o -m"$(git log --format=%B -n1)" -m"[build]"`,
+        `git commit --amend -o -m"$(git log --format=%B -n1)" -m"${config.tag}"`,
       );
       terminal.show();
 
