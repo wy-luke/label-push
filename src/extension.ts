@@ -60,10 +60,32 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage("Your branch is up to date.");
       }
 
-      const lastCommit = await repo.getCommit("HEAD");
-      const commitMessage = `${lastCommit.message}\n\n[build]`;
+      if (!terminal) {
+        // 如果不存在，创建新终端
+        terminal = vscode.window.createTerminal({
+          name: `Tag push`,
+          cwd: workspaceRoot[0].uri.fsPath,
+        });
 
-      await repo.commit(commitMessage, { amend: true });
+        // 注册关闭事件，当终端被关闭时清空引用
+        context.subscriptions.push(
+          vscode.window.onDidCloseTerminal((closedTerminal) => {
+            if (closedTerminal === terminal) {
+              terminal = undefined;
+            }
+          }),
+        );
+      }
+
+      terminal.sendText(
+        `git commit --amend -o -m"$(git log --format=%B -n1)" -m"[build]"`,
+      );
+      terminal.show();
+
+      // const lastCommit = await repo.getCommit("HEAD");
+      // const commitMessage = `${lastCommit.message}\n\n[build]`;
+
+      // await repo.commit(commitMessage, { amend: true });
 
       repo.push();
 
