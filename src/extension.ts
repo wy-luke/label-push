@@ -31,33 +31,44 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const headCommit = repo.state.HEAD?.commit; // HEAD commit of the current branch
-      const upstreamCommit = repo.state.HEAD?.upstream?.commit; // HEAD commit of the upstream branch
+      const state = repo.state;
 
-      if (headCommit !== upstreamCommit) {
-        try {
-          await repo.pull();
-          vscode.window.showInformationMessage("Pull successful");
-        } catch (error) {
-          if ((error as any).gitErrorCode === GitErrorCodes.Conflict) {
-            vscode.window.showErrorMessage(
-              "Pull resulted in conflicts. Please resolve them.",
-            );
+      if (state.remotes.length === 0 || !state.HEAD?.upstream) {
+        // 无 remote
+        vscode.window.showErrorMessage("没有设置Remote");
+        return;
+      }
 
-            // let state = repo?.state;
-            // while (state?.mergeChanges?.length > 0) {
-            //   // Wait for 1 second
-            //   await new Promise((resolve) => setTimeout(resolve, 1000));
-            //   state = repo?.state;
-            // }
+      if (state.workingTreeChanges.length !== 0) {
+        // 工作区存在修改
+      }
 
-            // Continue with the rest of your code here
-          } else {
-            vscode.window.showErrorMessage(`Error pulling: ${error}`);
+      if (state.indexChanges.length !== 0) {
+        // 暂存区存在修改
+      }
+
+      if (state.HEAD?.ahead !== 0) {
+        // 本地存在新的提交
+        if (state.HEAD?.behind !== 0) {
+          // Remote存在新的提交，需要拉取
+          try {
+            await repo.pull();
+            vscode.window.showInformationMessage("Pull successful");
+          } catch (error) {
+            if ((error as any).gitErrorCode === GitErrorCodes.Conflict) {
+              vscode.window.showErrorMessage(
+                "Pull resulted in conflicts. Please resolve them.",
+              );
+            } else {
+              vscode.window.showErrorMessage(`Error pulling: ${error}`);
+            }
           }
         }
       } else {
-        vscode.window.showInformationMessage("Your branch is up to date.");
+        // 本地无新的提交
+        // TODO:是否强制推送
+        vscode.window.showInformationMessage("当前无修改");
+        return;
       }
 
       if (!terminal) {
