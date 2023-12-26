@@ -32,16 +32,19 @@ export function activate(context: vscode.ExtensionContext) {
 
     if (state.remotes.length === 0 || !state.HEAD?.upstream) {
       // 无 remote
-      vscode.window.showErrorMessage('没有设置Remote')
+      vscode.window.showInformationMessage('当前分支未设置远程分支')
       return
     }
 
     if (state.workingTreeChanges.length !== 0) {
       // 工作区存在修改
+      vscode.window.showInformationMessage('当前工作区存在修改')
     }
 
     if (state.indexChanges.length !== 0) {
       // 暂存区存在修改
+      vscode.window.showInformationMessage('当前暂存区存在修改')
+      // TODO:提示用户是否提交暂存区修改，是、否、永不
     }
 
     if (state.HEAD?.ahead !== 0) {
