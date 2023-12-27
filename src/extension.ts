@@ -4,14 +4,8 @@ import { GitErrorCodes, GitExtension } from './git'
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  // This line of code will only be executed once when your extension is activated
-  console.log('Congratulations, your extension "tag-push" is now active!')
-
   let terminal: vscode.Terminal | undefined
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerCommand('tag-push.tagPush', async () => {
     // 获取当前项目的根路径
     const workspaceRoot = vscode.workspace.workspaceFolders
@@ -98,38 +92,6 @@ export function activate(context: vscode.ExtensionContext) {
     // await repo.commit(commitMessage, { amend: true });
 
     repo.push()
-
-    // if (workspaceRoot) {
-    //   if (!terminal) {
-    //     // 如果不存在，创建新终端
-    //     terminal = vscode.window.createTerminal({
-    //       name: `Tag push`,
-    //       cwd: workspaceRoot[0].uri.fsPath,
-    //     });
-
-    //     // 注册关闭事件，当终端被关闭时清空引用
-    //     context.subscriptions.push(
-    //       vscode.window.onDidCloseTerminal((closedTerminal) => {
-    //         if (closedTerminal === terminal) {
-    //           terminal = undefined;
-    //         }
-    //       }),
-    //     );
-    //   }
-
-    //   terminal.sendText(
-    //     `git merge 4baa3be483b6fbff8559a327370eaa5aaa83c733;`,
-    //   );
-    //   terminal.sendText(
-    //     `
-    //   git commit --amend -m"$(git log --format=%B -n1)" -m"[build]"`,
-    //   );
-    //   terminal.show();
-    // } else {
-    //   vscode.window.showErrorMessage(
-    //     "No workspace opened. Please open a workspace before executing this command.",
-    //   );
-    // }
   })
 
   context.subscriptions.push(disposable)
