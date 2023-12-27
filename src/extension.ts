@@ -4,6 +4,8 @@ import { GitErrorCodes, GitExtension } from './git'
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  const config = vscode.workspace.getConfiguration('tag-push')
+
   let terminal: vscode.Terminal | undefined
 
   let disposable = vscode.commands.registerCommand('tag-push.tagPush', async () => {
@@ -59,8 +61,6 @@ export function activate(context: vscode.ExtensionContext) {
       )
     }
 
-    const config = vscode.workspace.getConfiguration('tag-push')
-
     // Remote存在新的提交，需要拉取
     if (state.HEAD?.behind !== 0) {
       try {
@@ -80,7 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
       terminal.sendText(`git commit --amend -o -m"$(git log --format=%B -n1)" -m"${config.tag}"`)
     } else {
       // 本地无新的提交
-      vscode.window.showInformationMessage('当前无修改')
+      vscode.window.showInformationMessage('当前本地无修改')
       terminal.sendText(`git commit --allow-empty -m"build: ${config.tag}"`)
       return
     }
