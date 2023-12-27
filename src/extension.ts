@@ -18,11 +18,12 @@ export function activate(context: vscode.ExtensionContext) {
 
     const gitExtension = vscode.extensions.getExtension<GitExtension>('vscode.git')?.exports
     const git = gitExtension?.getAPI(1)
+
     if (!workspaceRoot || !git) {
       return
     }
 
-    const repo = git?.getRepository(workspaceRoot[0].uri)
+    const repo = git.getRepository(workspaceRoot[0].uri)
     if (!repo) {
       vscode.window.showErrorMessage(`当前目录非Git仓库`)
       return
@@ -47,28 +48,6 @@ export function activate(context: vscode.ExtensionContext) {
       // TODO:提示用户是否提交暂存区修改，是、否、永不
     }
 
-    // 本地存在新的提交
-    if (state.HEAD?.ahead !== 0) {
-      // Remote存在新的提交，需要拉取
-      if (state.HEAD?.behind !== 0) {
-        try {
-          await repo.pull()
-          vscode.window.showInformationMessage('Pull successful')
-        } catch (error) {
-          if ((error as any).gitErrorCode === GitErrorCodes.Conflict) {
-            vscode.window.showErrorMessage('Pull resulted in conflicts. Please resolve them.')
-          } else {
-            vscode.window.showErrorMessage(`Error pulling: ${error}`)
-          }
-        }
-      }
-    } else {
-      // 本地无新的提交
-      // TODO:是否强制推送
-      vscode.window.showInformationMessage('当前无修改')
-      return
-    }
-
     if (!terminal) {
       // 如果不存在，创建新终端
       terminal = vscode.window.createTerminal({
@@ -88,12 +67,34 @@ export function activate(context: vscode.ExtensionContext) {
 
     const config = vscode.workspace.getConfiguration('tag-push')
 
-    terminal.sendText(`git commit --amend -o -m"$(git log --format=%B -n1)" -m"${config.tag}"`)
+    // Remote存在新的提交，需要拉取
+    if (state.HEAD?.behind !== 0) {
+      try {
+        await repo.pull()
+        vscode.window.showInformationMessage('Pull successful')
+      } catch (error) {
+        if ((error as any).gitErrorCode === GitErrorCodes.Conflict) {
+          vscode.window.showErrorMessage('Pull resulted in conflicts. Please resolve them.')
+        } else {
+          vscode.window.showErrorMessage(`Error pulling: ${error}`)
+        }
+      }
+    }
+
+    // 本地存在新的提交
+    if (state.HEAD?.ahead !== 0) {
+      terminal.sendText(`git commit --amend -o -m"$(git log --format=%B -n1)" -m"${config.tag}"`)
+    } else {
+      // 本地无新的提交
+      vscode.window.showInformationMessage('当前无修改')
+      terminal.sendText(`git commit --allow-empty -m"build: ${config.tag}"`)
+      return
+    }
+
     terminal.show()
 
     // const lastCommit = await repo.getCommit("HEAD");
     // const commitMessage = `${lastCommit.message}\n\n[build]`;
-
     // await repo.commit(commitMessage, { amend: true });
 
     repo.push()
