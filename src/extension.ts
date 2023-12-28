@@ -77,11 +77,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     // 本地存在新的提交
     if (state.HEAD?.ahead !== 0) {
-      terminal.sendText(`git commit --amend -o -m"$(git log --format=%B -n1)" -m"${config.tag}"`)
+      terminal.sendText(
+        `git commit --amend -o -m"$(git log --format=%B -n1)" -m"${config.tag}" && git push`,
+      )
     } else {
       // 本地无新的提交
       vscode.window.showInformationMessage('当前本地无修改')
-      terminal.sendText(`git commit --allow-empty -m"build: ${config.tag}"`)
+      terminal.sendText(`git commit --allow-empty -m"build: ${config.tag}" && git push`)
       return
     }
 
@@ -91,11 +93,8 @@ export function activate(context: vscode.ExtensionContext) {
     // const commitMessage = `${lastCommit.message}\n\n[build]`;
     // await repo.commit(commitMessage, { amend: true });
 
-    repo.push()
+    // repo.push()
   })
 
   context.subscriptions.push(disposable)
 }
-
-// This method is called when your extension is deactivated
-export function deactivate() {}
