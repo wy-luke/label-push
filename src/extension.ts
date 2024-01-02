@@ -6,13 +6,14 @@ import { GitErrorCodes, GitExtension } from './git'
 export function activate(context: vscode.ExtensionContext) {
   const config = vscode.workspace.getConfiguration('tag-push')
 
+  const outputChannel = vscode.window.createOutputChannel('Tag Push')
+  outputChannel.show()
+  outputChannel.appendLine('Starting Tag Push......')
+  outputChannel.show()
+
   let terminal: vscode.Terminal | undefined
 
   let disposable = vscode.commands.registerCommand('tag-push.tagPush', async () => {
-    // Create output channel
-    const outputChannel = vscode.window.createOutputChannel('Tag push')
-    outputChannel.show()
-
     // 获取当前项目的根路径
     const workspaceRoot = vscode.workspace.workspaceFolders
 
@@ -77,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (!terminal) {
       // 如果不存在，创建新终端
       terminal = vscode.window.createTerminal({
-        name: `Tag push`,
+        name: `Tag Push`,
         cwd: workspaceRoot[0].uri.fsPath,
       })
 
