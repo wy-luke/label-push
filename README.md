@@ -4,8 +4,8 @@
 
 ## TODO
 
-- [ ] Keep the changes staged
-- [ ] Set the tag words in the extension settings
+- [x] Keep the changes staged
+- [x] Set the tag words in the extension settings
 - [ ] Notifications and settings about the changes staged
 - [ ] Tag style: inline or new line or something else...
 
