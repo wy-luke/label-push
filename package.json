@@ -21,6 +21,15 @@
   "categories": [
     "Other"
   ],
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/wy-luke/tag-push",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wy-luke/tag-push.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wy-luke/tag-push/issues"
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
