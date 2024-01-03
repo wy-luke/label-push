@@ -7,9 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
   const config = vscode.workspace.getConfiguration('tag-push')
 
   const outputChannel = vscode.window.createOutputChannel('Tag Push')
-  outputChannel.show()
   outputChannel.appendLine('Starting Tag Push......')
-  outputChannel.show()
 
   let terminal: vscode.Terminal | undefined
 
