@@ -43,7 +43,12 @@ export function activate(context: vscode.ExtensionContext) {
     })
   }
 
-  const config = vscode.workspace.getConfiguration('tag-push')
+  let config = vscode.workspace.getConfiguration('tag-push')
+  vscode.workspace.onDidChangeConfiguration((e) => {
+    if (e.affectsConfiguration('tag-push')) {
+      config = vscode.workspace.getConfiguration('tag-push')
+    }
+  })
 
   let terminal: vscode.Terminal | null = null
 
@@ -144,8 +149,8 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     // 本地存在新的提交
-    if (state.HEAD?.ahead !== 0) {
-      outputChannel.appendLine('There is new commit')
+    if (!state.HEAD?.upstream || state.HEAD?.ahead !== 0) {
+      outputChannel.appendLine('There are new commits locally')
 
       const command = `git commit --amend ${
         addStagedOrNot ? '' : '-o'
@@ -154,11 +159,11 @@ export function activate(context: vscode.ExtensionContext) {
       outputChannel.appendLine('execute: ' + command)
     } else {
       // 本地无新的提交
-      outputChannel.appendLine('There is no new commit')
+      outputChannel.appendLine('There are no new commits locally')
 
-      const command = `git commit --allow-empty -m"build: ${config.tag}" ${
-        pushOrNot ? '&& git push' : ''
-      }`
+      const command = `git commit --allow-empty ${addStagedOrNot ? '' : '-o'} -m"build: ${
+        config.tag
+      }" ${pushOrNot ? '&& git push' : ''}`
       terminal.sendText(command)
       outputChannel.appendLine('execute: ' + command)
     }
