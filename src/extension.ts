@@ -145,7 +145,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // 本地存在新的提交
     if (state.HEAD?.ahead !== 0) {
-      outputChannel.appendLine('There is new commit')
+      outputChannel.appendLine('There are new commits locally')
 
       const command = `git commit --amend ${
         addStagedOrNot ? '' : '-o'
@@ -154,7 +154,7 @@ export function activate(context: vscode.ExtensionContext) {
       outputChannel.appendLine('execute: ' + command)
     } else {
       // 本地无新的提交
-      outputChannel.appendLine('There is no new commit')
+      outputChannel.appendLine('There are no new commits locally')
 
       const command = `git commit --allow-empty ${addStagedOrNot ? '' : '-o'} -m"build: ${
         config.tag
