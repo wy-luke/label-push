@@ -122,6 +122,7 @@ export function activate(context: vscode.ExtensionContext) {
         } else {
           outputChannel.appendLine(`Pull failed: ${error}`)
         }
+        return
       }
     }
 
