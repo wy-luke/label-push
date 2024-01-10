@@ -73,18 +73,18 @@ export function activate(context: vscode.ExtensionContext) {
 
     // 无远程分支
     if (!state.HEAD?.upstream) {
-      if (config.pushBranch === ConfigOptions.Suggest) {
+      if (config.publishBranch === ConfigOptions.Suggest) {
         const pick = await showDialog(
           '当前分支未设置远程分支，是否直接推送？',
           config,
-          'pushBranch',
+          'publishBranch',
         )
         if (pick === DialogPick.Cancle) {
           return
         }
         pushOrNot = pick === DialogPick.Yes
       } else {
-        pushOrNot = config.pushBranch === ConfigOptions.Always
+        pushOrNot = config.publishBranch === ConfigOptions.Always
       }
     }
 

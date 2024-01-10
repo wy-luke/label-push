@@ -67,7 +67,7 @@
           "default": "[build]",
           "description": "The string added to the commit message, aka the tag."
         },
-        "tag-push.pushBranch": {
+        "tag-push.publishBranch": {
           "type": "string",
           "enum": [
             "Always",
@@ -75,7 +75,7 @@
             "Suggest"
           ],
           "default": "Suggest",
-          "description": "Whether to push the branch not exit in remote."
+          "description": "Whether to publish the branch that does not exist in the remote repository"
         },
         "tag-push.addStaged": {
           "type": "string",
