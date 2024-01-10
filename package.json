@@ -98,8 +98,8 @@
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
     "prepare": "husky install",
-    "package": "pnpm vsce package --no-dependencies",
-    "publish": "pnpm vsce publish --no-dependencies"
+    "package": "pnpm exec vsce package --no-dependencies",
+    "publish": "pnpm exec vsce publish --no-dependencies"
   },
   "extensionDependencies": [
     "vscode.git"
