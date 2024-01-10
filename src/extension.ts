@@ -43,7 +43,12 @@ export function activate(context: vscode.ExtensionContext) {
     })
   }
 
-  const config = vscode.workspace.getConfiguration('tag-push')
+  let config = vscode.workspace.getConfiguration('tag-push')
+  vscode.workspace.onDidChangeConfiguration((e) => {
+    if (e.affectsConfiguration('tag-push')) {
+      config = vscode.workspace.getConfiguration('tag-push')
+    }
+  })
 
   let terminal: vscode.Terminal | null = null
 
