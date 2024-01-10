@@ -1,7 +1,7 @@
 {
   "name": "tag-push",
   "displayName": "Tag Push",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Add a tag to your latest commit message and then push.",
   "publisher": "wy-Luke",
   "author": {
