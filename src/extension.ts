@@ -156,9 +156,9 @@ export function activate(context: vscode.ExtensionContext) {
       // 本地无新的提交
       outputChannel.appendLine('There is no new commit')
 
-      const command = `git commit --allow-empty -m"build: ${config.tag}" ${
-        pushOrNot ? '&& git push' : ''
-      }`
+      const command = `git commit --allow-empty ${addStagedOrNot ? '' : '-o'} -m"build: ${
+        config.tag
+      }" ${pushOrNot ? '&& git push' : ''}`
       terminal.sendText(command)
       outputChannel.appendLine('execute: ' + command)
     }
