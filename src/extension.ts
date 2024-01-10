@@ -149,7 +149,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     // 本地存在新的提交
-    if (state.HEAD?.ahead !== 0) {
+    if (!state.HEAD?.upstream || state.HEAD?.ahead !== 0) {
       outputChannel.appendLine('There are new commits locally')
 
       const command = `git commit --amend ${
