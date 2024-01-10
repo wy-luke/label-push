@@ -66,6 +66,26 @@
           "type": "string",
           "default": "[build]",
           "description": "The string added to the commit message, aka the tag."
+        },
+        "tag-push.pushBranch": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never",
+            "Suggest"
+          ],
+          "default": "Suggest",
+          "description": "Whether to push the branch not exit in remote."
+        },
+        "tag-push.addStaged": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never",
+            "Suggest"
+          ],
+          "default": "Suggest",
+          "description": "Whether to add the changes staged."
         }
       }
     }
