@@ -76,7 +76,10 @@ export function activate(context: vscode.ExtensionContext) {
       return
     }
 
-    await currentRepo.fetch({ prune: true })
+    // prune 操作过于危险，先注掉
+    // await currentRepo.fetch({ prune: true })
+
+    await currentRepo.fetch()
 
     // 无远程分支
     if (!state.HEAD?.upstream) {
