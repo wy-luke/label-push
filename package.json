@@ -75,7 +75,17 @@
             "Suggest"
           ],
           "default": "Suggest",
-          "description": "Whether to publish the branch that does not exist in the remote repository"
+          "description": "Whether to publish the branch that does not exist in the remote repository."
+        },
+        "tag-push.publishDeletedBranch": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never",
+            "Suggest"
+          ],
+          "default": "Suggest",
+          "description": "Whether to publish the branch that was deleted in the remote repository."
         },
         "tag-push.addStaged": {
           "type": "string",

@@ -76,6 +76,11 @@ export function activate(context: vscode.ExtensionContext) {
       return
     }
 
+    // prune 操作过于危险，先注掉
+    // await currentRepo.fetch({ prune: true })
+
+    await currentRepo.fetch()
+
     // 无远程分支
     if (!state.HEAD?.upstream) {
       if (config.publishBranch === ConfigOptions.Suggest) {
@@ -83,6 +88,21 @@ export function activate(context: vscode.ExtensionContext) {
           '当前分支未设置远程分支，是否直接推送？',
           config,
           'publishBranch',
+        )
+        if (pick === DialogPick.Cancle) {
+          return
+        }
+        pushOrNot = pick === DialogPick.Yes
+      } else {
+        pushOrNot = config.publishBranch === ConfigOptions.Always
+      }
+    } else if (!state.HEAD?.upstream?.commit) {
+      // 远程分支被删除
+      if (config.publishDeletedBranch === ConfigOptions.Suggest) {
+        const pick = await showDialog(
+          '远程分支疑似被删除，是否直接推送？',
+          config,
+          'publishDeletedBranch',
         )
         if (pick === DialogPick.Cancle) {
           return
