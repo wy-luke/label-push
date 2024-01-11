@@ -5,7 +5,30 @@ All notable changes to the "tag-push" extension will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.3] - 2024-01-12
+
+### Added
+
+- feat: fetch before check remote
+- feat: suggest when remote branch was deleted
+
+## [0.1.2] - 2024-01-11
+
+### Fixed
+
+- fix: avoid creating empty commits when no remote branch
+- fix: retrieve config after changes
+- fix: check addStagedOrNot when create empty commit
+
+## [0.1.1] - 2024-01-11
+
+### Fixed
+
+- fix: return when catch error after pull
+
+### Changed
+
+- refactor: change `config.pushBranch` to `config.publishBranch`
 
 ## [0.1.0] - 2024-01-11
 

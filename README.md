@@ -6,11 +6,11 @@
 
 - Add a tag to the latest commit's message and then push.
 - Create an empty commit with the tag when there are no new commits locally.
-- Set the words as the tag in the extension setting.
+- Set the tag words in extension settings.
 - Pull automatically when necessary.
-- Use git extension bundled in VS Code to detect local git repository.
 - Select whether to keep the changes staged.
 - Select whether to publish the branch that does not exist in the remote repository.
+- Select whether to publish the branch that was deleted in the remote repository.
 
 ## Extension Settings
 
@@ -32,6 +32,4 @@
 
 ## Release Notes
 
-### 0.1.0
-
-First version of **Tag Push**.
+Detailed Release Notes are available [here](CHANGELOG.md).
