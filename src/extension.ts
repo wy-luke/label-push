@@ -56,8 +56,6 @@ export function activate(context: vscode.ExtensionContext) {
     outputChannel.appendLine(getTimeStamp() + 'Start successfully')
   }
 
-  outputChannel.show()
-
   let disposable = vscode.commands.registerCommand('tag-push.tagPush', async () => {
     if (!currentRepo) {
       outputChannel.appendLine(getTimeStamp() + 'Error: No git repository was detected')
