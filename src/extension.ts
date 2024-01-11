@@ -76,6 +76,8 @@ export function activate(context: vscode.ExtensionContext) {
       return
     }
 
+    await currentRepo.fetch({ prune: true })
+
     // 无远程分支
     if (!state.HEAD?.upstream) {
       if (config.publishBranch === ConfigOptions.Suggest) {
