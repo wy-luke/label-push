@@ -75,7 +75,7 @@
             "Suggest"
           ],
           "default": "Suggest",
-          "description": "Whether to publish the branch that does not exist in the remote repository"
+          "description": "Whether to publish the branch that does not exist in the remote repository."
         },
         "tag-push.addStaged": {
           "type": "string",
