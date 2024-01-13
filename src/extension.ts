@@ -1,17 +1,21 @@
 import * as vscode from 'vscode'
 import { GitErrorCodes, GitExtension, Repository } from './git'
-import { ConfigOptions, DialogPick } from './types'
+import { ConfigOptions, DialogPick, LogType } from './types'
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
   const outputChannel = vscode.window.createOutputChannel('Tag Push')
-  outputChannel.appendLine(getTimeStamp() + 'Starting Tag Push......')
+  const log = (log: String, logType = LogType.Info) => {
+    outputChannel.appendLine(`[${getTimeStamp()}] [${logType}] ${log}`)
+  }
+
+  log('Starting Tag Push......')
 
   // 获取当前项目的根路径
   const workspaceRoot = vscode.workspace.workspaceFolders
   if (!workspaceRoot) {
-    outputChannel.appendLine(getTimeStamp() + 'Error: No workspace folder opened')
+    log('No workspace folder opened', LogType.Error)
     return
   }
 
@@ -19,27 +23,23 @@ export function activate(context: vscode.ExtensionContext) {
   const git = gitExtension?.getAPI(1)
   if (!git) {
     vscode.window.showErrorMessage('没有找到Git插件，请检查是否禁用。')
-    outputChannel.appendLine(getTimeStamp() + 'Error: The git extension not found')
+    log('The git extension not found', LogType.Error)
     outputChannel.show()
     return
   }
 
-  outputChannel.appendLine(
-    getTimeStamp() + `${git.repositories.length.toString()} repositories detected`,
-  )
+  log(`${git.repositories.length.toString()} repositories detected`)
 
   let currentRepo: Repository | null = null
   if (git.repositories.length > 0) {
     currentRepo = git.repositories[0]
-    outputChannel.appendLine(getTimeStamp() + `Set git repository: ${git.repositories[0].rootUri}`)
+    log(`Set git repository: ${git.repositories[0].rootUri}`)
   } else {
     git.onDidOpenRepository((repo) => {
       currentRepo = repo
-      outputChannel.appendLine(
-        getTimeStamp() + `${git.repositories.length.toString()} repositories detected`,
-      )
-      outputChannel.appendLine(getTimeStamp() + `Set git repository: ${repo.rootUri}`)
-      outputChannel.appendLine(getTimeStamp() + 'Start successfully')
+      log(`${git.repositories.length.toString()} repositories detected`)
+      log(`Set git repository: ${repo.rootUri}`)
+      log('Start successfully')
     })
   }
 
@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
   })
 
   if (currentRepo) {
-    outputChannel.appendLine(getTimeStamp() + 'Start successfully')
+    log('Start successfully')
   }
 
   let terminal: vscode.Terminal | null = null
@@ -59,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand('tag-push.tagPush', async () => {
     if (!currentRepo) {
       vscode.window.showErrorMessage('没有找到Git仓库，请检查当前目录。')
-      outputChannel.appendLine(getTimeStamp() + 'Error: No git repository was detected')
+      log('No git repository was detected', LogType.Error)
       return
     }
 
@@ -80,9 +80,9 @@ export function activate(context: vscode.ExtensionContext) {
 
     try {
       await currentRepo.fetch()
-      outputChannel.appendLine(getTimeStamp() + 'Fetch successfully')
+      log('Fetch successfully')
     } catch (error) {
-      outputChannel.appendLine(getTimeStamp() + `Error: Fetch failed - ${error}`)
+      log(`Fetch failed: ${error}`, LogType.Error)
     }
 
     // 无远程分支
@@ -141,16 +141,16 @@ export function activate(context: vscode.ExtensionContext) {
     // 远程分支存在新的提交，需要拉取
     if (state.HEAD?.behind !== 0) {
       try {
-        outputChannel.appendLine(getTimeStamp() + `Start to pull......`)
+        log(`Start to pull......`)
         await currentRepo.pull()
-        outputChannel.appendLine(getTimeStamp() + `Pull successfully`)
+        log(`Pull successfully`)
       } catch (error) {
         const erroCode = (error as any).gitErrorCode
         if (erroCode === GitErrorCodes.Conflict || erroCode === GitErrorCodes.StashConflict) {
           vscode.window.showInformationMessage('存在冲突，请解决后再次提交')
-          outputChannel.appendLine(getTimeStamp() + `Error: Pull resulted in conflicts`)
+          log(`Pull resulted in conflicts`, LogType.Error)
         } else {
-          outputChannel.appendLine(getTimeStamp() + `Pull failed: ${error}`)
+          log(`Pull failed: ${error}`, LogType.Error)
           outputChannel.show()
         }
         return
@@ -163,14 +163,14 @@ export function activate(context: vscode.ExtensionContext) {
         name: `Tag Push`,
         cwd: workspaceRoot[0].uri.fsPath,
       })
-      outputChannel.appendLine(getTimeStamp() + `Create a terminal`)
+      log(`Create a terminal`)
 
       // 注册关闭事件，当终端被关闭时清空引用
       context.subscriptions.push(
         vscode.window.onDidCloseTerminal((closedTerminal) => {
           if (closedTerminal === terminal) {
             terminal = null
-            outputChannel.appendLine(getTimeStamp() + `Close the terminal`)
+            log(`Close the terminal`)
           }
         }),
       )
@@ -179,7 +179,7 @@ export function activate(context: vscode.ExtensionContext) {
     let command: string = ''
     // 本地存在新的提交
     if (!state.HEAD?.upstream || state.HEAD?.ahead !== 0) {
-      outputChannel.appendLine(getTimeStamp() + 'There are new commits locally')
+      log('There are new commits locally')
 
       command = `git commit --amend ${
         addStagedOrNot ? '' : '-o'
@@ -193,7 +193,7 @@ export function activate(context: vscode.ExtensionContext) {
       }`
     }
     terminal.sendText(command)
-    outputChannel.appendLine(getTimeStamp() + 'Execute: ' + command)
+    log('Execute: ' + command)
 
     // terminal.show()
 
@@ -257,7 +257,6 @@ async function showDialog(
 const getTimeStamp = () => {
   const date = new Date()
   return (
-    '[' +
     date.getFullYear() +
     '-' +
     pad2(date.getMonth() + 1) +
@@ -270,8 +269,7 @@ const getTimeStamp = () => {
     ':' +
     pad2(date.getSeconds()) +
     '.' +
-    pad3(date.getMilliseconds()) +
-    '] '
+    pad3(date.getMilliseconds())
   )
 }
 

@@ -9,3 +9,9 @@ export enum DialogPick {
   No,
   Cancle,
 }
+
+export enum LogType {
+  Info = 'Info',
+  Warn = 'Warn',
+  Error = 'Error',
+}
