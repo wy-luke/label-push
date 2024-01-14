@@ -1,23 +1,44 @@
 # Tag Push extension for Visual Studio Code
 
-**Tag Push** could add some specific words, as a tag, to your latest commit's message and then push.
+**Tag Push** could add a tag string to your latest commit message and then push.
+
+> What for? E.g., you could add a `build` tag to trigger the CI/CD Pipeline when you want.
 
 ## Features
 
-- Add a tag to the latest commit's message and then push.
-- Create an empty commit with the tag when there are no new commits locally.
-- Set the tag words in extension settings.
+- Add a tag string to your latest commit message and then push.
+- Create an empty commit with the tag when there are no new commits locally, if enabled in the settings.
 - Pull automatically when necessary.
-- Select whether to keep the changes staged.
+- Set the tag string in extension settings.
+- Select whether to commit the changes staged.
 - Select whether to publish the branch that does not exist in the remote repository.
 - Select whether to publish the branch that was deleted in the remote repository.
 
+## Usage
+
+You have several ways to trigger "Tag Push":
+
+1. Open the Command Palette (Ctrl+Shift+P / ⌘+Shift+P) and type `Tag Push`.
+2. Click "Tag Push" in the status bar.
+3. Click the "Tag Push" icon in the Source Control view.
+   ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/tag-push/main/resources/menu-navigation.png)
+
 ## Extension Settings
 
-- Tag: The string added to the commit message, aka the tag.
+- Tag: The tag string added to the commit message.
 
   - type: string,
   - default: [build]
+
+- CommitEmpty: Whether to create an empty commit with the tag when there are no new commits locally.
+
+  - type: boolean,
+  - default: false
+
+- ShowStatusBarItem: Whether to show "Tag Push" status bar item.
+
+  - type: boolean,
+  - default: true
 
 - PublishBranch: Whether to publish the branch that does not exist in the remote repository.
 
