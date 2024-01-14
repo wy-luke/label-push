@@ -200,6 +200,11 @@ export function activate(context: vscode.ExtensionContext) {
       // 本地无新的提交
       logger.log('There are no new commits locally')
 
+      if (!config.commitEmpty) {
+        logger.log(`Committing empty is disabled`)
+        return
+      }
+
       command = `git commit --allow-empty ${addStagedOrNot ? '' : '-o'} -m"build: ${config.tag}" ${
         pushOrNot ? '&& git push' : ''
       }`

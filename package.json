@@ -67,6 +67,11 @@
           "default": "[build]",
           "description": "The string added to the commit message, aka the tag."
         },
+        "tag-push.commitEmpty": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to create an empty commit with the tag when there are no new commits locally."
+        },
         "tag-push.showStatusBarItem": {
           "type": "boolean",
           "default": true,
