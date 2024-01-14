@@ -16,11 +16,11 @@
 
 ## Usage
 
-You have several ways to use "Tag Push":
+You have several ways to use **Tag Push**:
 
 1. Open the Command Palette (Ctrl+Shift+P / ⌘+Shift+P) and type `Tag Push`.
 2. Click "Tag Push" in the status bar.
-3. Click the "Tag Push" icon in the Source Control view.
+3. Click the "Tag Push" icon in the Source Control view, as shown below:
 
    ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/tag-push/main/resources/menu-navigation.png)
 
@@ -28,20 +28,26 @@ You have several ways to use "Tag Push":
 
 - Tag: The tag string added to the commit message.
 
-  - type: `string`,
+  - type: `string`
   - default: `[build]`
 
 - CommitEmpty: Whether to create an empty commit with the tag when there are no new commits locally.
 
-  - type: `boolean`,
+  - type: `boolean`
   - default: `false`
 
 - ShowStatusBarItem: Whether to show "Tag Push" status bar item.
 
-  - type: `boolean`,
+  - type: `boolean`
   - default: `true`
 
 - PublishBranch: Whether to publish the branch that does not exist in the remote repository.
+
+  - type: `string`
+  - enum: `[Always, Never, Suggest]`
+  - default: `Suggest`
+
+- publishDeletedBranch: Whether to publish the branch that was deleted in the remote repository.
 
   - type: `string`
   - enum: `[Always, Never, Suggest]`
