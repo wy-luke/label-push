@@ -69,7 +69,7 @@
         },
         "tag-push.commitEmpty": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Whether to create an empty commit with the tag when there are no new commits locally."
         },
         "tag-push.showStatusBarItem": {
