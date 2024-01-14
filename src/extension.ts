@@ -2,12 +2,14 @@ import * as vscode from 'vscode'
 import { GitErrorCodes, GitExtension, Repository } from './git'
 import { ConfigOptions, DialogPick, LogType } from './types'
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+/**
+ * This method is called when the extension is activated by any activationEvents in package.json.
+ * If there are no activationEvents listed，get called when the very first time the command is executed.
+ */
 export function activate(context: vscode.ExtensionContext) {
   const outputChannel = vscode.window.createOutputChannel('Tag Push')
   const log = (log: String, logType = LogType.Info) => {
-    outputChannel.appendLine(`[${getTimeStamp()}] [${logType}] ${log}`)
+    outputChannel.appendLine(`[${getTimeStamp()}] [${logType}] > ${log}`)
   }
 
   log('Starting Tag Push......')
@@ -24,9 +26,18 @@ export function activate(context: vscode.ExtensionContext) {
   if (!git) {
     vscode.window.showErrorMessage('没有找到Git插件，请检查是否禁用。')
     log('The git extension not found', LogType.Error)
-    outputChannel.show()
+    // outputChannel.show()
     return
   }
+
+  let config = vscode.workspace.getConfiguration('tag-push')
+  log('Read configurations')
+  vscode.workspace.onDidChangeConfiguration((e) => {
+    if (e.affectsConfiguration('tag-push')) {
+      config = vscode.workspace.getConfiguration('tag-push')
+      log('Configurations updated')
+    }
+  })
 
   log(`${git.repositories.length.toString()} repositories detected`)
 
@@ -34,6 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
   if (git.repositories.length > 0) {
     currentRepo = git.repositories[0]
     log(`Set git repository: ${git.repositories[0].rootUri}`)
+    log('Start successfully')
   } else {
     git.onDidOpenRepository((repo) => {
       currentRepo = repo
@@ -41,17 +53,6 @@ export function activate(context: vscode.ExtensionContext) {
       log(`Set git repository: ${repo.rootUri}`)
       log('Start successfully')
     })
-  }
-
-  let config = vscode.workspace.getConfiguration('tag-push')
-  vscode.workspace.onDidChangeConfiguration((e) => {
-    if (e.affectsConfiguration('tag-push')) {
-      config = vscode.workspace.getConfiguration('tag-push')
-    }
-  })
-
-  if (currentRepo) {
-    log('Start successfully')
   }
 
   let terminal: vscode.Terminal | null = null
@@ -71,7 +72,7 @@ export function activate(context: vscode.ExtensionContext) {
     // 无远程仓库
     if (state.remotes.length === 0) {
       vscode.window.showErrorMessage('未设置远程仓库')
-      outputChannel.appendLine('Error: Remote repository not found')
+      log('Remote repository not found', LogType.Error)
       return
     }
 
@@ -79,6 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
     // await currentRepo.fetch({ prune: true })
 
     try {
+      log(`Start to fetch......`)
       await currentRepo.fetch()
       log('Fetch successfully')
     } catch (error) {
@@ -147,11 +149,15 @@ export function activate(context: vscode.ExtensionContext) {
       } catch (error) {
         const erroCode = (error as any).gitErrorCode
         if (erroCode === GitErrorCodes.Conflict || erroCode === GitErrorCodes.StashConflict) {
-          vscode.window.showInformationMessage('存在冲突，请解决后再次提交')
+          vscode.window.showErrorMessage('存在冲突，请解决后再次提交')
           log(`Pull resulted in conflicts`, LogType.Error)
         } else {
           log(`Pull failed: ${error}`, LogType.Error)
-          outputChannel.show()
+
+          const pick = await vscode.window.showErrorMessage('拉取失败，请检查', '查看日志')
+          if (pick === '查看日志') {
+            outputChannel.show()
+          }
         }
         return
       }
@@ -186,7 +192,7 @@ export function activate(context: vscode.ExtensionContext) {
       } -m"$(git log --format=%B -n1)" -m"${config.tag}" ${pushOrNot ? '&& git push' : ''}`
     } else {
       // 本地无新的提交
-      outputChannel.appendLine('There are no new commits locally')
+      log('There are no new commits locally')
 
       command = `git commit --allow-empty ${addStagedOrNot ? '' : '-o'} -m"build: ${config.tag}" ${
         pushOrNot ? '&& git push' : ''
