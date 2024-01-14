@@ -2,17 +2,22 @@
   "name": "tag-push",
   "displayName": "Tag Push",
   "version": "0.1.3",
-  "description": "Add a tag to your latest commit message and then push.",
+  "description": "Add a tag string to your latest commit message and then push.",
   "publisher": "wy-Luke",
   "author": {
     "name": "Luke",
     "email": "wykj.luke@gmail.com"
   },
   "keywords": [
+    "tagPush",
     "git",
     "push",
     "commit",
-    "commit message"
+    "commit message",
+    "piplines",
+    "CI/CD",
+    "continuous integration",
+    "CI/CD piplines"
   ],
   "icon": "resources/icon.png",
   "engines": {
