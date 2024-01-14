@@ -1,23 +1,21 @@
 import * as vscode from 'vscode'
 import { GitErrorCodes, GitExtension, Repository } from './git'
 import { ConfigOptions, DialogPick, LogType } from './types'
+import { Logger } from './logger'
 
 /**
  * This method is called when the extension is activated by any activationEvents in package.json.
  * If there are no activationEvents listed，get called when the very first time the command is executed.
  */
 export function activate(context: vscode.ExtensionContext) {
-  const outputChannel = vscode.window.createOutputChannel('Tag Push')
-  const log = (log: String, logType = LogType.Info) => {
-    outputChannel.appendLine(`[${getTimeStamp()}] [${logType}] > ${log}`)
-  }
+  const logger = new Logger()
 
-  log('Starting Tag Push......')
+  logger.log('Starting Tag Push......')
 
   // 获取当前项目的根路径
   const workspaceRoot = vscode.workspace.workspaceFolders
   if (!workspaceRoot) {
-    log('No workspace folder opened', LogType.Error)
+    logger.log('No workspace folder opened', LogType.Error)
     return
   }
 
@@ -25,33 +23,33 @@ export function activate(context: vscode.ExtensionContext) {
   const git = gitExtension?.getAPI(1)
   if (!git) {
     vscode.window.showErrorMessage('没有找到Git插件，请检查是否禁用。')
-    log('The git extension not found', LogType.Error)
+    logger.log('The git extension not found', LogType.Error)
     // outputChannel.show()
     return
   }
 
   let config = vscode.workspace.getConfiguration('tag-push')
-  log('Read configurations')
+  logger.log('Read configurations')
   vscode.workspace.onDidChangeConfiguration((e) => {
     if (e.affectsConfiguration('tag-push')) {
       config = vscode.workspace.getConfiguration('tag-push')
-      log('Configurations updated')
+      logger.log('Configurations updated')
     }
   })
 
-  log(`${git.repositories.length.toString()} repositories detected`)
+  logger.log(`${git.repositories.length.toString()} repositories detected`)
 
   let currentRepo: Repository | null = null
   if (git.repositories.length > 0) {
     currentRepo = git.repositories[0]
-    log(`Set git repository: ${git.repositories[0].rootUri}`)
-    log('Start successfully')
+    logger.log(`Set git repository: ${git.repositories[0].rootUri}`)
+    logger.log('Start successfully')
   } else {
     git.onDidOpenRepository((repo) => {
       currentRepo = repo
-      log(`${git.repositories.length.toString()} repositories detected`)
-      log(`Set git repository: ${repo.rootUri}`)
-      log('Start successfully')
+      logger.log(`${git.repositories.length.toString()} repositories detected`)
+      logger.log(`Set git repository: ${repo.rootUri}`)
+      logger.log('Start successfully')
     })
   }
 
@@ -60,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand('tag-push.tagPush', async () => {
     if (!currentRepo) {
       vscode.window.showErrorMessage('没有找到Git仓库，请检查当前目录。')
-      log('No git repository was detected', LogType.Error)
+      logger.log('No git repository was detected', LogType.Error)
       return
     }
 
@@ -72,7 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
     // 无远程仓库
     if (state.remotes.length === 0) {
       vscode.window.showErrorMessage('未设置远程仓库')
-      log('Remote repository not found', LogType.Error)
+      logger.log('Remote repository not found', LogType.Error)
       return
     }
 
@@ -80,11 +78,11 @@ export function activate(context: vscode.ExtensionContext) {
     // await currentRepo.fetch({ prune: true })
 
     try {
-      log(`Start to fetch......`)
+      logger.log(`Start to fetch......`)
       await currentRepo.fetch()
-      log('Fetch successfully')
+      logger.log('Fetch successfully')
     } catch (error) {
-      log(`Fetch failed: ${error}`, LogType.Error)
+      logger.log(`Fetch failed: ${error}`, LogType.Error)
     }
 
     // 无远程分支
@@ -143,20 +141,20 @@ export function activate(context: vscode.ExtensionContext) {
     // 远程分支存在新的提交，需要拉取
     if (state.HEAD?.behind !== 0) {
       try {
-        log(`Start to pull......`)
+        logger.log(`Start to pull......`)
         await currentRepo.pull()
-        log(`Pull successfully`)
+        logger.log(`Pull successfully`)
       } catch (error) {
         const erroCode = (error as any).gitErrorCode
         if (erroCode === GitErrorCodes.Conflict || erroCode === GitErrorCodes.StashConflict) {
           vscode.window.showErrorMessage('存在冲突，请解决后再次提交')
-          log(`Pull resulted in conflicts`, LogType.Error)
+          logger.log(`Pull resulted in conflicts`, LogType.Error)
         } else {
-          log(`Pull failed: ${error}`, LogType.Error)
+          logger.log(`Pull failed: ${error}`, LogType.Error)
 
           const pick = await vscode.window.showErrorMessage('拉取失败，请检查', '查看日志')
           if (pick === '查看日志') {
-            outputChannel.show()
+            logger.show()
           }
         }
         return
@@ -169,14 +167,14 @@ export function activate(context: vscode.ExtensionContext) {
         name: `Tag Push`,
         cwd: workspaceRoot[0].uri.fsPath,
       })
-      log(`Create a terminal`)
+      logger.log(`Create a terminal`)
 
       // 注册关闭事件，当终端被关闭时清空引用
       context.subscriptions.push(
         vscode.window.onDidCloseTerminal((closedTerminal) => {
           if (closedTerminal === terminal) {
             terminal = null
-            log(`Close the terminal`)
+            logger.log(`Close the terminal`)
           }
         }),
       )
@@ -185,21 +183,21 @@ export function activate(context: vscode.ExtensionContext) {
     let command: string = ''
     // 本地存在新的提交
     if (!state.HEAD?.upstream || state.HEAD?.ahead !== 0) {
-      log('There are new commits locally')
+      logger.log('There are new commits locally')
 
       command = `git commit --amend ${
         addStagedOrNot ? '' : '-o'
       } -m"$(git log --format=%B -n1)" -m"${config.tag}" ${pushOrNot ? '&& git push' : ''}`
     } else {
       // 本地无新的提交
-      log('There are no new commits locally')
+      logger.log('There are no new commits locally')
 
       command = `git commit --allow-empty ${addStagedOrNot ? '' : '-o'} -m"build: ${config.tag}" ${
         pushOrNot ? '&& git push' : ''
       }`
     }
     terminal.sendText(command)
-    log('Execute: ' + command)
+    logger.log('Execute: ' + command)
 
     // terminal.show()
 
@@ -258,41 +256,4 @@ async function showDialog(
   }
 
   return DialogPick[pick.title as keyof typeof DialogPick]
-}
-
-const getTimeStamp = () => {
-  const date = new Date()
-  return (
-    date.getFullYear() +
-    '-' +
-    pad2(date.getMonth() + 1) +
-    '-' +
-    pad2(date.getDate()) +
-    ' ' +
-    pad2(date.getHours()) +
-    ':' +
-    pad2(date.getMinutes()) +
-    ':' +
-    pad2(date.getSeconds()) +
-    '.' +
-    pad3(date.getMilliseconds())
-  )
-}
-
-/**
- * Pad a number with a leading zero if it is less than two digits long.
- * @param n The number to be padded.
- * @returns The padded number.
- */
-function pad2(n: number) {
-  return (n > 9 ? '' : '0') + n
-}
-
-/**
- * Pad a number with leading zeros if it is less than three digits long.
- * @param n The number to be padded.
- * @returns The padded number.
- */
-function pad3(n: number) {
-  return (n > 99 ? '' : n > 9 ? '0' : '00') + n
 }
