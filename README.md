@@ -55,3 +55,14 @@ You have several ways to use "Tag Push":
 ## Release Notes
 
 Detailed Release Notes are available [here](CHANGELOG.md).
+
+## Acknowledgements
+
+Thanks for the following projects, which inspired me a lot:
+
+- [Git Graph](https://github.com/mhutchie/vscode-git-graph)
+- [Visual Studio Code](https://github.com/microsoft/vscode)
+
+The icons used are from [IconPark
+](https://github.com/bytedance/iconpark) from
+Bytedance.
