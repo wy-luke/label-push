@@ -1,7 +1,8 @@
 import * as vscode from 'vscode'
-import { GitErrorCodes, GitExtension, Repository } from './git'
+import { API as gitAPI, GitErrorCodes, GitExtension, Repository } from './git'
 import { ConfigOptions, DialogPick, LogType } from './types'
 import { Logger } from './logger'
+import { StatusBarItem } from './statusBarItem'
 
 /**
  * This method is called when the extension is activated by any activationEvents in package.json.
@@ -28,6 +29,27 @@ export function activate(context: vscode.ExtensionContext) {
     return
   }
 
+  logger.log(`${git.repositories.length.toString()} repositories detected`)
+
+  let currentRepo: Repository | null = null
+  if (git.repositories.length === 1) {
+    currentRepo = git.repositories[0]
+    logger.log(`Set git repository: ${currentRepo.rootUri}`)
+  } else if (git.repositories.length > 1) {
+    vscode.window.showErrorMessage('暂不支持同时打开多个Git仓库')
+    logger.log(`${git.repositories.length.toString()} repositories detected`, LogType.Error)
+  } else {
+    git.onDidOpenRepository((repo) => {
+      if (git.repositories.length > 1) {
+        vscode.window.showErrorMessage('暂不支持同时打开多个Git仓库')
+        logger.log(`${git.repositories.length.toString()} repositories detected`, LogType.Error)
+      } else {
+        currentRepo = repo
+        logger.log(`Set git repository: ${currentRepo.rootUri}`)
+      }
+    })
+  }
+
   let config = vscode.workspace.getConfiguration('tag-push')
   logger.log('Read configurations')
   vscode.workspace.onDidChangeConfiguration((e) => {
@@ -37,21 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   })
 
-  logger.log(`${git.repositories.length.toString()} repositories detected`)
-
-  let currentRepo: Repository | null = null
-  if (git.repositories.length > 0) {
-    currentRepo = git.repositories[0]
-    logger.log(`Set git repository: ${git.repositories[0].rootUri}`)
-    logger.log('Start successfully')
-  } else {
-    git.onDidOpenRepository((repo) => {
-      currentRepo = repo
-      logger.log(`${git.repositories.length.toString()} repositories detected`)
-      logger.log(`Set git repository: ${repo.rootUri}`)
-      logger.log('Start successfully')
-    })
-  }
+  new StatusBarItem(config, logger, git)
 
   let terminal: vscode.Terminal | null = null
 

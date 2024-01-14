@@ -67,6 +67,11 @@
           "default": "[build]",
           "description": "The string added to the commit message, aka the tag."
         },
+        "tag-push.showStatusBarItem": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to show \"Tag Push\" status bar item."
+        },
         "tag-push.publishBranch": {
           "type": "string",
           "enum": [
