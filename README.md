@@ -2,7 +2,7 @@
 
 **Tag Push** could add a tag string to your latest commit message and then push.
 
-> What for? E.g., you could add a `build` tag to trigger the CI/CD Pipeline when you want.
+> What for? E.g., you could add a "build" tag to trigger the CI/CD Pipeline when you want.
 
 ## Features
 
@@ -16,40 +16,41 @@
 
 ## Usage
 
-You have several ways to trigger "Tag Push":
+You have several ways to use "Tag Push":
 
 1. Open the Command Palette (Ctrl+Shift+P / ⌘+Shift+P) and type `Tag Push`.
 2. Click "Tag Push" in the status bar.
 3. Click the "Tag Push" icon in the Source Control view.
+
    ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/tag-push/main/resources/menu-navigation.png)
 
 ## Extension Settings
 
 - Tag: The tag string added to the commit message.
 
-  - type: string,
-  - default: [build]
+  - type: `string`,
+  - default: `[build]`
 
 - CommitEmpty: Whether to create an empty commit with the tag when there are no new commits locally.
 
-  - type: boolean,
-  - default: false
+  - type: `boolean`,
+  - default: `false`
 
 - ShowStatusBarItem: Whether to show "Tag Push" status bar item.
 
-  - type: boolean,
-  - default: true
+  - type: `boolean`,
+  - default: `true`
 
 - PublishBranch: Whether to publish the branch that does not exist in the remote repository.
 
-  - type: string
-  - enum: [Always, Never, Suggest]
-  - default: Suggest
+  - type: `string`
+  - enum: `[Always, Never, Suggest]`
+  - default: `Suggest`
 
 - AddStaged: Whether to add the changes staged.
-  - type: string
-  - enum: [Always, Never, Suggest]
-  - default: Suggest
+  - type: `string`
+  - enum: `[Always, Never, Suggest]`
+  - default: `Suggest`
 
 ## Release Notes
 
