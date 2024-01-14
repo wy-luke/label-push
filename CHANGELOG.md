@@ -2,8 +2,16 @@
 
 All notable changes to the "tag-push" extension will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [0.1.4] - 2024-01-15
+
+### Added
+
+feat: add the status bar item
+feat: add a config about whether to commit empty, false by default
+
+### Fixed
+
+fix: remove outputChannel.show() every start
 
 ## [0.1.3] - 2024-01-12
 
@@ -18,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - fix: avoid creating empty commits when no remote branch
 - fix: retrieve config after changes
-- fix: check addStagedOrNot when create empty commit
+- fix: check addStagedOrNot when create empty commits
 
 ## [0.1.1] - 2024-01-11
 
