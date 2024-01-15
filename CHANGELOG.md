@@ -2,6 +2,10 @@
 
 All notable changes to the "tag-push" extension will be documented in this file.
 
+## [0.2.0] - 2024-01-15
+
+Just doc updates.
+
 ## [0.1.4] - 2024-01-14
 
 ### Added
