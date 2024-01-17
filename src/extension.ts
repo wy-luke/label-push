@@ -174,6 +174,7 @@ export function activate(context: vscode.ExtensionContext) {
       terminal = vscode.window.createTerminal({
         name: `Tag Push`,
         cwd: workspaceRoot[0].uri.fsPath,
+        hideFromUser: true,
       })
       logger.log(`Create a terminal`)
 
