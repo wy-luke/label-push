@@ -271,3 +271,6 @@ async function showDialog(
 
   return DialogPick[pick.title as keyof typeof DialogPick]
 }
+
+// This method is called when your extension is deactivated
+export function deactivate() {}
