@@ -72,6 +72,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     let pushOrNot = true
     let addStagedOrNot = false
+    let command: string = ''
 
     const state = currentRepo.state
 
@@ -125,18 +126,18 @@ export function activate(context: vscode.ExtensionContext) {
       }
     }
 
-    // 暂存区存在修改
-    if (state.indexChanges.length !== 0) {
-      if (config.addStaged === ConfigOptions.Suggest) {
-        const pick = await showDialog('当前暂存区存在修改，是否提交？', config, 'addStaged')
-        if (pick === DialogPick.Cancle) {
-          return
-        }
-        addStagedOrNot = pick === DialogPick.Yes
-      } else {
-        addStagedOrNot = config.addStaged === ConfigOptions.Always
-      }
-    }
+    // // 暂存区存在修改
+    // if (state.indexChanges.length !== 0) {
+    //   if (config.addStaged === ConfigOptions.Suggest) {
+    //     const pick = await showDialog('当前暂存区存在修改，是否提交？', config, 'addStaged')
+    //     if (pick === DialogPick.Cancle) {
+    //       return
+    //     }
+    //     addStagedOrNot = pick === DialogPick.Yes
+    //   } else {
+    //     addStagedOrNot = config.addStaged === ConfigOptions.Always
+    //   }
+    // }
     // else if (state.workingTreeChanges.length !== 0) {
     // 暂存区无修改，但工作区存在修改
     // addWorkingTree = await showDialog(
@@ -189,10 +190,22 @@ export function activate(context: vscode.ExtensionContext) {
       )
     }
 
-    let command: string = ''
     // 本地存在新的提交
     if (!state.HEAD?.upstream || state.HEAD?.ahead !== 0) {
       logger.log('There are new commits locally')
+
+      // 暂存区存在修改
+      if (state.indexChanges.length !== 0) {
+        if (config.addStaged === ConfigOptions.Suggest) {
+          const pick = await showDialog('当前暂存区存在修改，是否提交？', config, 'addStaged')
+          if (pick === DialogPick.Cancle) {
+            return
+          }
+          addStagedOrNot = pick === DialogPick.Yes
+        } else {
+          addStagedOrNot = config.addStaged === ConfigOptions.Always
+        }
+      }
 
       command = `git commit --amend ${
         addStagedOrNot ? '' : '-o'
@@ -201,8 +214,11 @@ export function activate(context: vscode.ExtensionContext) {
       // 本地无新的提交
       logger.log('There are no new commits locally')
 
+      // 暂存区存在修改
+      // 工作区存在修改
+
       if (!config.commitEmpty) {
-        logger.log(`Committing empty is disabled`)
+        logger.log(`Empty commit is disabled`)
         return
       }
 
