@@ -4,12 +4,19 @@ All notable changes to the "tag-push" extension will be documented in this file.
 
 ## [0.2.1] - 2024-01-24
 
+### Fixed
+
 fix: hide terminal
-fix: check staging area when have new commits
+
+### Changed
+
+fix: check staging area only when have new commits
 
 ## [0.2.0] - 2024-01-15
 
-Just doc updates.
+### Changed
+
+Change version number to 0.2.0
 
 ## [0.1.4] - 2024-01-14
 
