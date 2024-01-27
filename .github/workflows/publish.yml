@@ -1,9 +1,13 @@
-name: publish
+name: Auto Publish
 
 on:
   release:
     types:
       - created
+  # workflow_run:
+  #   workflows: ['Auto Release']
+  #   types:
+  #     - completed
 
 jobs:
   publish:
@@ -33,9 +37,9 @@ jobs:
       - name: Run tests
         run: xvfb-run -a pnpm run test
         if: runner.os == 'Linux'
-      - name: Run tests
-        run: pnpm run test
-        if: runner.os != 'Linux'
+      # - name: Run tests
+      #   run: pnpm run test
+      #   if: runner.os != 'Linux'
 
       - name: Publish
         if: success() && startsWith(github.ref, 'refs/tags/')
