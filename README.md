@@ -1,5 +1,8 @@
 # Tag Push extension for Visual Studio Code
 
+[![Auto Release](https://github.com/wy-luke/tag-push/actions/workflows/release.yml/badge.svg)](https://github.com/wy-luke/tag-push/actions/workflows/release.yml)
+[![Auto Publish](https://github.com/wy-luke/tag-push/actions/workflows/publish.yml/badge.svg)](https://github.com/wy-luke/tag-push/actions/workflows/publish.yml)
+
 **Tag Push** could add a tag string to your latest commit message and then push.
 
 > What for? E.g., you could add a "build" tag to trigger the CI/CD Pipeline when you want.
