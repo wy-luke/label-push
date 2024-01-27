@@ -44,4 +44,4 @@ jobs:
           draft: true
           prerelease: false
           files: |
-            ./*.vsix
+            *.vsix
