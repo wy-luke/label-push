@@ -3,11 +3,12 @@ name: Auto Publish
 on:
   release:
     types:
-      - created
-  # workflow_run:
-  #   workflows: ['Auto Release']
-  #   types:
-  #     - completed
+      - published
+  workflow_run:
+    workflows: ['Auto Release']
+    types:
+      - completed
+  workflow_dispatch:
 
 jobs:
   publish:
