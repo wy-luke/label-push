@@ -39,15 +39,17 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.showErrorMessage('暂不支持同时打开多个Git仓库')
     logger.log(`${git.repositories.length.toString()} repositories detected`, LogType.Error)
   } else {
-    git.onDidOpenRepository((repo) => {
-      if (git.repositories.length > 1) {
-        vscode.window.showErrorMessage('暂不支持同时打开多个Git仓库')
-        logger.log(`${git.repositories.length.toString()} repositories detected`, LogType.Error)
-      } else {
-        currentRepo = repo
-        logger.log(`Set git repository: ${currentRepo.rootUri}`)
-      }
-    })
+    context.subscriptions.push(
+      git.onDidOpenRepository((repo) => {
+        if (git.repositories.length > 1) {
+          vscode.window.showErrorMessage('暂不支持同时打开多个Git仓库')
+          logger.log(`${git.repositories.length.toString()} repositories detected`, LogType.Error)
+        } else if (git.repositories.length === 1) {
+          currentRepo = repo
+          logger.log(`Set git repository: ${currentRepo.rootUri}`)
+        }
+      }),
+    )
   }
 
   let config = vscode.workspace.getConfiguration('tag-push')

@@ -1,0 +1,47 @@
+name: Auto Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  auto-release:
+    name: Release
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install dependencies
+        run: pnpm install
+
+      # - name: Run tests
+      #   run: xvfb-run -a pnpm run test
+      #   if: runner.os == 'Linux'
+      - name: Run tests
+        run: pnpm run test
+        if: runner.os != 'Linux'
+
+      - name: Package
+        run: pnpm run vspackage
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Release
+        if: success()
+        uses: 'marvinpinto/action-automatic-releases@latest'
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          draft: true
+          prerelease: false
+          files: |
+            ./*.vsix
