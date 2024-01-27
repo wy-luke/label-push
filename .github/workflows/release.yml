@@ -1,0 +1,27 @@
+name: auto-release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  auto-release:
+    name: Tagged Release
+    runs-on: macos-latest
+
+    steps:
+      - name: Run tests
+        run: xvfb-run -a pnpm run test
+        if: runner.os == 'Linux'
+      - name: Run tests
+        run: pnpm run test
+        if: runner.os != 'Linux'
+
+      - name: Release
+        if: success()
+        uses: 'marvinpinto/action-automatic-releases@latest'
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          draft: true
+          prerelease: false
