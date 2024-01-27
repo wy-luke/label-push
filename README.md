@@ -7,12 +7,11 @@
 ## Features
 
 - Add a tag string to your latest commit message and then push.
-- Create an empty commit with the tag when there are no new commits locally, if enabled in the settings.
-- Pull automatically when necessary.
-- Set the tag string in extension settings.
-- Select whether to commit the changes staged.
-- Select whether to publish the branch that does not exist in the remote repository.
-- Select whether to publish the branch that was deleted in the remote repository.
+- Create an empty commit with the tag string when there are no new commits locally, which is disabled by default.
+- The tag string is configurable.
+- Pull automatically if necessary.
+- You can choose whether to commit the changes staged.
+- You can choose whether to publish the branch that does not exist, or was deleted in the remote repository.
 
 ## Usage
 
@@ -69,6 +68,4 @@ Thanks for the following projects, which inspired me a lot:
 - [Git Graph](https://github.com/mhutchie/vscode-git-graph)
 - [Visual Studio Code](https://github.com/microsoft/vscode)
 
-The icons used are from [IconPark
-](https://github.com/bytedance/iconpark) from
-Bytedance.
+The icons used are from [IconPark](https://github.com/bytedance/iconpark) from Bytedance.
