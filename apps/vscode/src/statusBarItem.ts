@@ -3,7 +3,7 @@ import { Logger } from './logger'
 import { API as gitAPI, Repository } from './git'
 
 /**
- * Manages the Tag Push Status Bar Item, which allows users to use Tag Push from the Visual Studio Code Status Bar.
+ * Manages the Label Push Status Bar Item, which allows users to use Label Push from the Visual Studio Code Status Bar.
  */
 export class StatusBarItem {
   private readonly config: vscode.WorkspaceConfiguration
@@ -14,15 +14,15 @@ export class StatusBarItem {
   private numRepos: number = 0
 
   /**
-   * Creates the Tag Push Status Bar Item.
+   * Creates the Label Push Status Bar Item.
    */
   constructor(config: vscode.WorkspaceConfiguration, logger: Logger, git: gitAPI) {
     this.config = config
     this.logger = logger
 
     const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1)
-    statusBarItem.text = 'Tag Push'
-    statusBarItem.tooltip = 'Tag Push'
+    statusBarItem.text = 'Label Push'
+    statusBarItem.tooltip = 'Label Push'
     statusBarItem.command = 'tag-push.tagPush'
     this.statusBarItem = statusBarItem
 
@@ -56,10 +56,10 @@ export class StatusBarItem {
     if (this.isVisible !== shouldBeVisible) {
       if (shouldBeVisible) {
         this.statusBarItem.show()
-        this.logger.log('Showing "Tag Push" status bar item')
+        this.logger.log('Showing "Label Push" status bar item')
       } else {
         this.statusBarItem.hide()
-        this.logger.log('Hiding "Tag Push" status bar item')
+        this.logger.log('Hiding "Label Push" status bar item')
       }
       this.isVisible = shouldBeVisible
     }

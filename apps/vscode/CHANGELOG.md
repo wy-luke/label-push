@@ -56,7 +56,7 @@ fix: remove outputChannel.show() every start
 
 ## [0.1.0] - 2024-01-11
 
-First version of **Tag Push**.
+First version of **Label Push**.
 
 ### Added
 

@@ -11,7 +11,7 @@ import { StatusBarItem } from './statusBarItem'
 export function activate(context: vscode.ExtensionContext) {
   const logger = new Logger()
 
-  logger.log('Starting Tag Push2......')
+  logger.log('Starting Label Push2......')
 
   // 获取当前项目的根路径
   const workspaceRoot = vscode.workspace.workspaceFolders
@@ -175,7 +175,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (!terminal) {
       // 如果不存在，创建新终端
       terminal = vscode.window.createTerminal({
-        name: `Tag Push`,
+        name: `Label Push`,
         cwd: workspaceRoot[0].uri.fsPath,
         hideFromUser: true,
       })

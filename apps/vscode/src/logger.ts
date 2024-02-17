@@ -2,16 +2,16 @@ import { LogType } from './types'
 import * as vscode from 'vscode'
 
 /**
- * Manages the Tag Push Logger, which writes log information to the Tag Push Output Channel.
+ * Manages the Label Push Logger, which writes log information to the Label Push Output Channel.
  */
 export class Logger {
   private readonly channel: vscode.OutputChannel
 
   /**
-   * Creates the Tag Push Logger.
+   * Creates the Label Push Logger.
    */
   constructor() {
-    this.channel = vscode.window.createOutputChannel('Tag Push')
+    this.channel = vscode.window.createOutputChannel('Label Push')
   }
 
   /**

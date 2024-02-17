@@ -1,6 +1,6 @@
 {
   "name": "label-push",
-  "displayName": "Tag Push",
+  "displayName": "Label Push",
   "version": "0.2.1",
   "description": "Add a tag string to your latest commit message and then push.",
   "publisher": "wy-Luke",
@@ -43,7 +43,7 @@
     "commands": [
       {
         "command": "tag-push.tagPush",
-        "title": "Tag Push",
+        "title": "Label Push",
         "icon": {
           "light": "resources/cmd-icon-light.svg",
           "dark": "resources/cmd-icon-dark.svg"
@@ -65,7 +65,7 @@
       ]
     },
     "configuration": {
-      "title": "Tag Push",
+      "title": "Label Push",
       "properties": {
         "tag-push.tag": {
           "type": "string",
@@ -80,7 +80,7 @@
         "tag-push.showStatusBarItem": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to show \"Tag Push\" status bar item."
+          "description": "Whether to show \"Label Push\" status bar item."
         },
         "tag-push.publishBranch": {
           "type": "string",
