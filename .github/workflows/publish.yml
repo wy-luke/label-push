@@ -1,4 +1,4 @@
-name: Auto Publish
+name: VSCode Extension Publish
 
 on:
   release:
