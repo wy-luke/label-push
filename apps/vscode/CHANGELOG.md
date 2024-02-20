@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the "tag-push" extension will be documented in this file.
+All notable changes to the "label-push" extension will be documented in this file.
 
 ## [0.2.1] - 2024-01-24
 
@@ -60,9 +60,9 @@ First version of **Label Push**.
 
 ### Added
 
-- Add a tag to the latest commit's message and then push.
-- Create an empty commit with the tag when there are no new commits locally.
-- Set the words as the tag in the extension setting.
+- Add a label to the latest commit's message and then push.
+- Create an empty commit with the label when there are no new commits locally.
+- Set the words as the label in the extension setting.
 - Pull automatically when necessary.
 - Use git extension bundled in VS Code to detect local git repository.
 - Use termial to execute git commands.

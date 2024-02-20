@@ -52,11 +52,11 @@ export function activate(context: vscode.ExtensionContext) {
     )
   }
 
-  let config = vscode.workspace.getConfiguration('tag-push')
+  let config = vscode.workspace.getConfiguration('label-push')
   logger.log('Read configurations')
   vscode.workspace.onDidChangeConfiguration((e) => {
-    if (e.affectsConfiguration('tag-push')) {
-      config = vscode.workspace.getConfiguration('tag-push')
+    if (e.affectsConfiguration('label-push')) {
+      config = vscode.workspace.getConfiguration('label-push')
       logger.log('Configurations updated')
     }
   })
@@ -65,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   let terminal: vscode.Terminal | null = null
 
-  let disposable = vscode.commands.registerCommand('tag-push.tagPush', async () => {
+  let disposable = vscode.commands.registerCommand('label-push.labelPush', async () => {
     if (!currentRepo) {
       vscode.window.showErrorMessage('没有找到Git仓库，请检查当前目录。')
       logger.log('No git repository was detected', LogType.Error)
@@ -211,7 +211,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       command = `git commit --amend ${
         addStagedOrNot ? '' : '-o'
-      } -m"$(git log --format=%B -n1)" -m"${config.tag}" ${pushOrNot ? '&& git push' : ''}`
+      } -m"$(git log --format=%B -n1)" -m"${config.label}" ${pushOrNot ? '&& git push' : ''}`
     } else {
       // 本地无新的提交
       logger.log('There are no new commits locally')
@@ -224,9 +224,9 @@ export function activate(context: vscode.ExtensionContext) {
         return
       }
 
-      command = `git commit --allow-empty ${addStagedOrNot ? '' : '-o'} -m"build: ${config.tag}" ${
-        pushOrNot ? '&& git push' : ''
-      }`
+      command = `git commit --allow-empty ${addStagedOrNot ? '' : '-o'} -m"build: ${
+        config.label
+      }" ${pushOrNot ? '&& git push' : ''}`
     }
     terminal.sendText(command)
     logger.log('Execute: ' + command)

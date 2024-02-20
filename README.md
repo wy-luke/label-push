@@ -1,17 +1,17 @@
 # Monorepo for Label Push
 
-[![Auto Release](https://github.com/wy-luke/tag-push/actions/workflows/release.yml/badge.svg)](https://github.com/wy-luke/tag-push/actions/workflows/release.yml)
-[![Auto Publish](https://github.com/wy-luke/tag-push/actions/workflows/publish.yml/badge.svg)](https://github.com/wy-luke/tag-push/actions/workflows/publish.yml)
+[![Auto Release](https://github.com/wy-luke/label-push/actions/workflows/release.yml/badge.svg)](https://github.com/wy-luke/label-push/actions/workflows/release.yml)
+[![Auto Publish](https://github.com/wy-luke/label-push/actions/workflows/publish.yml/badge.svg)](https://github.com/wy-luke/label-push/actions/workflows/publish.yml)
 
-**Label Push** could add a tag string to your latest commit message and then push.
+**Label Push** could add a label string to your latest commit message and then push.
 
-> What for? E.g., you could add a "build" tag to trigger the CI/CD Pipeline when you want.
+> What for? E.g., you could add a "build" label to trigger the CI/CD Pipeline when you want.
 
 ## Features
 
-- Add a tag string to your latest commit message and then push.
-- Create an empty commit with the tag string when there are no new commits locally, which is disabled by default.
-- The tag string is configurable.
+- Add a label string to your latest commit message and then push.
+- Create an empty commit with the label string when there are no new commits locally, which is disabled by default.
+- The label string is configurable.
 - Pull automatically if necessary.
 - You can choose whether to commit the changes staged.
 - You can choose whether to publish the branch that does not exist, or was deleted in the remote repository.

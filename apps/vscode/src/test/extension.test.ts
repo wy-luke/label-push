@@ -4,15 +4,15 @@ import * as vscode from 'vscode'
 suite('Extension Test Suite', () => {
   vscode.window.showInformationMessage('Start all tests.')
 
-  test('Register the tagPush command', () => {
+  test('Register the labelPush command', () => {
     vscode.commands.getCommands().then((commands) => {
-      assert.ok(commands.includes('tag-push.tagPush'))
+      assert.ok(commands.includes('label-push.labelPush'))
     })
   })
 
   test('Check the default value of configs', () => {
-    const config = vscode.workspace.getConfiguration('tag-push')
-    assert.strictEqual(config.get('tag'), '[build]')
+    const config = vscode.workspace.getConfiguration('label-push')
+    assert.strictEqual(config.get('label'), '[build]')
     assert.strictEqual(config.get('commitEmpty'), false)
     assert.strictEqual(config.get('showStatusBarItem'), true)
     assert.strictEqual(config.get('publishBranch'), 'Suggest')
