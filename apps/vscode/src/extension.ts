@@ -219,8 +219,25 @@ export function activate(context: vscode.ExtensionContext) {
       // 暂存区存在修改
       // 工作区存在修改
 
-      if (!config.commitEmpty) {
+      let commitEmpty = false
+      if (config.addStaged === ConfigOptions.Suggest) {
+        const pick = await showDialog(
+          '无本地提交，是否创建空提交(Empty Commit)?',
+          config,
+          'commitEmpty',
+        )
+        if (pick === DialogPick.Cancle) {
+          return
+        }
+        commitEmpty = pick === DialogPick.Yes
+      } else if (config.addStaged === ConfigOptions.Always) {
+        commitEmpty = true
+      } else if (config.addStaged === ConfigOptions.Never) {
         logger.log(`Empty commit is disabled`)
+      }
+
+      if (!commitEmpty) {
+        logger.log(`Don't create empty commit`)
         return
       }
 

@@ -72,15 +72,20 @@
           "default": "[build]",
           "description": "The string added to the commit message, aka the label."
         },
-        "label-push.commitEmpty": {
-          "type": "boolean",
-          "default": false,
-          "description": "Whether to create an empty commit with the label when there are no new commits locally."
-        },
         "label-push.showStatusBarItem": {
           "type": "boolean",
           "default": true,
           "description": "Whether to show \"Label Push\" status bar item."
+        },
+        "label-push.commitEmpty": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never",
+            "Suggest"
+          ],
+          "default": "Suggest",
+          "description": "Whether to create an empty commit with the label when there are no new commits locally."
         },
         "label-push.publishBranch": {
           "type": "string",
