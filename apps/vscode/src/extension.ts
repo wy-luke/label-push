@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { API as gitAPI, GitErrorCodes, GitExtension, Repository } from './git'
+import { GitErrorCodes, GitExtension, Repository } from './git'
 import { ConfigOptions, DialogPick, LogType } from './types'
 import { Logger } from './logger'
 import { StatusBarItem } from './statusBarItem'

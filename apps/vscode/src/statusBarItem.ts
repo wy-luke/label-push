@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import { Logger } from './logger'
-import { API as gitAPI, Repository } from './git'
+import { API as gitAPI } from './git'
 
 /**
  * Manages the Label Push Status Bar Item, which allows users to use Label Push from the Visual Studio Code Status Bar.
