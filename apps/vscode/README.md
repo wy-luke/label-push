@@ -24,7 +24,7 @@ You have several ways to use **Label Push**:
 2. Click "Label Push" in the status bar.
 3. Click the "Label Push" icon in the Source Control view, as shown below:
 
-   ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/label-push/main/resources/menu-navigation.png)
+   ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/label-push/main/apps/vscode/resources/menu-navigation.png)
 
 ## Extension Settings
 
