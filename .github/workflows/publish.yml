@@ -12,7 +12,7 @@ on:
 jobs:
   publish:
     name: Publish
-    environment: publish
+    environment: publish # 人工卡点
 
     strategy:
       matrix:
