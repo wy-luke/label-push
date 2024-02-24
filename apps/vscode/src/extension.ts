@@ -11,7 +11,7 @@ import { StatusBarItem } from './statusBarItem'
 export function activate(context: vscode.ExtensionContext) {
   const logger = new Logger()
 
-  logger.log('Starting Label Push2......')
+  logger.log('Starting Label Push......')
 
   // 获取当前项目的根路径
   const workspaceRoot = vscode.workspace.workspaceFolders
