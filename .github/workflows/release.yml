@@ -36,23 +36,22 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
-      - name: Get version
-        id: get-version
-        uses: actions/github-script@v7
-        with:
-          script: |
-            console.log(context.ref)
-            return String(context.ref).substring(14)
-          result-encoding: string
+      # - name: Get version
+      #   id: get-version
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script: return String(context.ref).substring(14)
+      #     result-encoding: string
+      #     # use returned value with ${{ steps.get-version.outputs.result }}
 
       - name: Release
         if: success()
         uses: 'marvinpinto/action-automatic-releases@latest'
         with:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
-          automatic_release_tag: '${{ steps.get-version.outputs.result }}'
+          automatic_release_tag: 'latest'
           draft: true
           prerelease: false
-          title: 'VS Code Extensinon ${{ steps.get-version.outputs.result }}'
+          title: 'VS Code Extensinon ${{  github.ref_name }}'
           files: |
             **/*.vsix
