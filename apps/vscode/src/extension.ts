@@ -129,25 +129,13 @@ export function activate(context: vscode.ExtensionContext) {
       }
     }
 
-    // // 暂存区存在修改
-    // if (state.indexChanges.length !== 0) {
-    //   if (config.addStaged === ConfigOptions.Suggest) {
-    //     const pick = await showDialog('当前暂存区存在修改，是否提交？', config, 'addStaged')
-    //     if (pick === DialogPick.Cancle) {
-    //       return
-    //     }
-    //     addStagedOrNot = pick === DialogPick.Yes
-    //   } else {
-    //     addStagedOrNot = config.addStaged === ConfigOptions.Always
-    //   }
-    // }
-    // else if (state.workingTreeChanges.length !== 0) {
-    // 暂存区无修改，但工作区存在修改
-    // addWorkingTree = await showDialog(
-    //   '当前暂存区无修改，工作区存在修改，是否直接提交？',
-    //   config,
-    //   'addWorkingTree',
-    // )
+    // 工作区存在修改
+    // if (state.workingTreeChanges.length !== 0) {
+    //   addWorkingTree = await showDialog(
+    //     '当前暂存区无修改，工作区存在修改，是否直接提交？',
+    //     config,
+    //     'addWorkingTree',
+    //   )
     // }
 
     // 远程分支存在新的提交，需要拉取
