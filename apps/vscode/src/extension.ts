@@ -216,6 +216,15 @@ export function activate(context: vscode.ExtensionContext) {
     if (!state.HEAD?.upstream || state.HEAD?.ahead !== 0) {
       logger.log('There are new commits locally')
 
+      // 上一个提交已经包含label，不做操作
+      // if (state.HEAD?.commit) {
+      //   const lastMessage = (await currentRepo.getCommit(state.HEAD.commit)).message
+      //   if (lastMessage.includes(config.label)) {
+      //     logger.log(`Last commit message has included label: ${lastMessage}`)
+      //     return
+      //   }
+      // }
+
       // 上一个提交为empty时，不加--allow-empty无法进行修改
       command = `git commit --allow-empty --amend ${
         addStagedOrNot ? '' : '-o'
