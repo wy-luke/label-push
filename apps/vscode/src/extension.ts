@@ -215,7 +215,8 @@ export function activate(context: vscode.ExtensionContext) {
     if (!state.HEAD?.upstream || state.HEAD?.ahead !== 0) {
       logger.log('There are new commits locally')
 
-      command = `git commit --amend ${
+      // 上一个提交为empty时，不加--allow-empty无法进行修改
+      command = `git commit --allow-empty --amend ${
         addStagedOrNot ? '' : '-o'
       } -m"$(git log --format=%B -n1)" -m"${config.label}" ${pushOrNot ? '&& git push' : ''}`
     } else {
