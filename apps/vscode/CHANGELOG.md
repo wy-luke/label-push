@@ -2,6 +2,22 @@
 
 All notable changes to the "label-push" extension will be documented in this file.
 
+## [1.0.0] - 2024-02-25
+
+v1.0.0 released!
+
+The project was renamed to "Label Push", and was migrated to a monorepo project. The package size was reduced by 90% to 12KB thanks to the correct use of the `.vscodeignore` file for `vsce`.
+
+## Changed
+
+- The package was renamed to "Label Push", and all related configs.
+- Ask whether to create empty commits when there are no new commits locally, and save the choice to commitEmpty config.
+- Ask whether to add staged changes when create empty commits
+
+## Fixed
+
+- fix: add --allow-empty when amend
+
 ## [0.2.1] - 2024-01-28
 
 ### Fixed
