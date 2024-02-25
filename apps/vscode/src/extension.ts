@@ -192,22 +192,28 @@ export function activate(context: vscode.ExtensionContext) {
       )
     }
 
+    // 暂存区存在修改
+    if (state.indexChanges.length !== 0) {
+      if (config.addStaged === ConfigOptions.Suggest) {
+        const pick = await showDialog(
+          '当前暂存区存在修改，是否添加到最新一次提交？',
+          config,
+          'addStaged',
+        )
+        if (pick === DialogPick.Cancle) {
+          return
+        }
+        addStagedOrNot = pick === DialogPick.Yes
+      } else if (config.addStaged === ConfigOptions.Always) {
+        addStagedOrNot = true
+      } else if (config.addStaged === ConfigOptions.Never) {
+        logger.log(`Adding staged files is disabled`)
+      }
+    }
+
     // 本地存在新的提交
     if (!state.HEAD?.upstream || state.HEAD?.ahead !== 0) {
       logger.log('There are new commits locally')
-
-      // 暂存区存在修改
-      if (state.indexChanges.length !== 0) {
-        if (config.addStaged === ConfigOptions.Suggest) {
-          const pick = await showDialog('当前暂存区存在修改，是否提交？', config, 'addStaged')
-          if (pick === DialogPick.Cancle) {
-            return
-          }
-          addStagedOrNot = pick === DialogPick.Yes
-        } else {
-          addStagedOrNot = config.addStaged === ConfigOptions.Always
-        }
-      }
 
       command = `git commit --amend ${
         addStagedOrNot ? '' : '-o'
@@ -216,13 +222,10 @@ export function activate(context: vscode.ExtensionContext) {
       // 本地无新的提交
       logger.log('There are no new commits locally')
 
-      // 暂存区存在修改
-      // 工作区存在修改
-
       let commitEmpty = false
       if (config.commitEmpty === ConfigOptions.Suggest) {
         const pick = await showDialog(
-          '无本地提交，是否创建空提交(Empty Commit)?',
+          '本地没有新的提交，是否创建空提交(Empty Commit)?',
           config,
           'commitEmpty',
         )
@@ -233,13 +236,15 @@ export function activate(context: vscode.ExtensionContext) {
       } else if (config.commitEmpty === ConfigOptions.Always) {
         commitEmpty = true
       } else if (config.commitEmpty === ConfigOptions.Never) {
-        logger.log(`Empty commit is disabled`)
+        logger.log(`Creating empty commit is disabled`)
       }
 
       if (!commitEmpty) {
         logger.log(`Don't create empty commit`)
         return
       }
+
+      // 工作区存在修改
 
       command = `git commit --allow-empty ${addStagedOrNot ? '' : '-o'} -m"build: ${
         config.label
