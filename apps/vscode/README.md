@@ -1,20 +1,20 @@
 # Label Push extension for Visual Studio Code
 
-[![Auto Release](https://github.com/wy-luke/tag-push/actions/workflows/release.yml/badge.svg)](https://github.com/wy-luke/tag-push/actions/workflows/release.yml)
-[![Auto Publish](https://github.com/wy-luke/tag-push/actions/workflows/publish.yml/badge.svg)](https://github.com/wy-luke/tag-push/actions/workflows/publish.yml)
+[![Auto Release](https://github.com/wy-luke/label-push/actions/workflows/release.yml/badge.svg)](https://github.com/wy-luke/label-push/actions/workflows/release.yml)
+[![Auto Publish](https://github.com/wy-luke/label-push/actions/workflows/publish.yml/badge.svg)](https://github.com/wy-luke/label-push/actions/workflows/publish.yml)
 
-**Label Push** could add a tag string to your latest commit message and then push.
+**Label Push** could add a label text to your latest commit message and then push.
 
-> What for? E.g., you could add a "build" tag to trigger the CI/CD Pipeline when you want.
+> What for? E.g., you could add a "build" label to trigger the CI/CD Pipeline when you want.
 
 ## Features
 
-- Add a tag string to your latest commit message and then push.
-- Create an empty commit with the tag string when there are no new commits locally, which is disabled by default.
-- The tag string is configurable.
-- Pull automatically if necessary.
-- You can choose whether to commit the changes staged.
+- Add a label text to your latest commit message and then push.
+- Create an empty commit with the label text when there are no new commits locally.
+- Pull automatically if necessary to make sure the label is added to the latest commit.
+- You can choose whether to commit the changes already staged.
 - You can choose whether to publish the branch that does not exist, or was deleted in the remote repository.
+- The label text is configurable.
 
 ## Usage
 
@@ -24,24 +24,25 @@ You have several ways to use **Label Push**:
 2. Click "Label Push" in the status bar.
 3. Click the "Label Push" icon in the Source Control view, as shown below:
 
-   ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/tag-push/main/resources/menu-navigation.png)
+   ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/label-push/main/apps/vscode/resources/menu-navigation.png)
 
 ## Extension Settings
 
-- Tag: The tag string added to the commit message.
+- Tag: The label text to be added to the commit message.
 
   - type: `string`
   - default: `[build]`
-
-- CommitEmpty: Whether to create an empty commit with the tag when there are no new commits locally.
-
-  - type: `boolean`
-  - default: `false`
 
 - ShowStatusBarItem: Whether to show "Label Push" status bar item.
 
   - type: `boolean`
   - default: `true`
+
+- CommitEmpty: Whether to create an empty commit with the label when there are no new commits locally.
+
+  - type: `string`
+  - enum: `[Always, Never, Suggest]`
+  - default: `Suggest`
 
 - PublishBranch: Whether to publish the branch that does not exist in the remote repository.
 

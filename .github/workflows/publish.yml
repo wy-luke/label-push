@@ -1,4 +1,4 @@
-name: Auto Publish
+name: VSCode Extension Publish
 
 on:
   release:
@@ -12,7 +12,7 @@ on:
 jobs:
   publish:
     name: Publish
-    environment: publish
+    environment: publish # 人工卡点
 
     strategy:
       matrix:

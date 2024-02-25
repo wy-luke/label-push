@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import { Logger } from './logger'
-import { API as gitAPI, Repository } from './git'
+import { API as gitAPI } from './git'
 
 /**
  * Manages the Label Push Status Bar Item, which allows users to use Label Push from the Visual Studio Code Status Bar.
@@ -23,7 +23,7 @@ export class StatusBarItem {
     const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1)
     statusBarItem.text = 'Label Push'
     statusBarItem.tooltip = 'Label Push'
-    statusBarItem.command = 'tag-push.tagPush'
+    statusBarItem.command = 'label-push.labelPush'
     this.statusBarItem = statusBarItem
 
     this.setNumRepos(git.repositories.length)
@@ -33,7 +33,7 @@ export class StatusBarItem {
     })
 
     vscode.workspace.onDidChangeConfiguration((e) => {
-      if (e.affectsConfiguration('tag-push.showStatusBarItem')) {
+      if (e.affectsConfiguration('label-push.showStatusBarItem')) {
         this.refresh()
       }
     })
@@ -49,7 +49,7 @@ export class StatusBarItem {
   }
 
   /**
-   * Show or hide the Status Bar Item according to the configured value of `tag-push.showStatusBarItem`.
+   * Show or hide the Status Bar Item according to the configured value of `label-push.showStatusBarItem`.
    */
   private refresh() {
     const shouldBeVisible = this.config.showStatusBarItem && this.numRepos > 0

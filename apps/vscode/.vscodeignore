@@ -1,0 +1,10 @@
+*
+**/**
+
+!dist/extension.js
+!LICENSE
+!CHANGELOG.md
+!README.md
+!resources/cmd-icon-dark.svg
+!resources/cmd-icon-light.svg
+!resources/icon.png

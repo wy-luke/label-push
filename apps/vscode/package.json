@@ -1,15 +1,16 @@
 {
   "name": "label-push",
   "displayName": "Label Push",
-  "version": "0.2.1",
-  "description": "Add a tag string to your latest commit message and then push.",
+  "version": "1.0.0",
+  "description": "Add a label text to your latest commit message and then push.",
   "publisher": "wy-Luke",
   "author": {
     "name": "Luke",
     "email": "wykj.luke@gmail.com"
   },
   "keywords": [
-    "tagPush",
+    "labelPush",
+    "Label Push",
     "git",
     "push",
     "commit",
@@ -27,13 +28,13 @@
     "Other"
   ],
   "license": "SEE LICENSE IN LICENSE",
-  "homepage": "https://github.com/wy-luke/tag-push",
+  "homepage": "https://github.com/wy-luke/label-push",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wy-luke/tag-push.git"
+    "url": "https://github.com/wy-luke/label-push.git"
   },
   "bugs": {
-    "url": "https://github.com/wy-luke/tag-push/issues"
+    "url": "https://github.com/wy-luke/label-push/issues"
   },
   "activationEvents": [
     "onStartupFinished"
@@ -42,7 +43,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "tag-push.tagPush",
+        "command": "label-push.labelPush",
         "title": "Label Push",
         "icon": {
           "light": "resources/cmd-icon-light.svg",
@@ -54,12 +55,12 @@
       "scm/title": [
         {
           "when": "scmProvider == git",
-          "command": "tag-push.tagPush",
+          "command": "label-push.labelPush",
           "group": "navigation"
         },
         {
           "when": "scmProvider == git",
-          "command": "tag-push.tagPush",
+          "command": "label-push.labelPush",
           "group": "inline"
         }
       ]
@@ -67,22 +68,27 @@
     "configuration": {
       "title": "Label Push",
       "properties": {
-        "tag-push.tag": {
+        "label-push.label": {
           "type": "string",
           "default": "[build]",
-          "description": "The string added to the commit message, aka the tag."
+          "description": "The label text to be added to the commit message."
         },
-        "tag-push.commitEmpty": {
-          "type": "boolean",
-          "default": false,
-          "description": "Whether to create an empty commit with the tag when there are no new commits locally."
-        },
-        "tag-push.showStatusBarItem": {
+        "label-push.showStatusBarItem": {
           "type": "boolean",
           "default": true,
           "description": "Whether to show \"Label Push\" status bar item."
         },
-        "tag-push.publishBranch": {
+        "label-push.commitEmpty": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never",
+            "Suggest"
+          ],
+          "default": "Suggest",
+          "description": "Whether to create an empty commit with the label when there are no new commits locally."
+        },
+        "label-push.publishBranch": {
           "type": "string",
           "enum": [
             "Always",
@@ -92,7 +98,7 @@
           "default": "Suggest",
           "description": "Whether to publish the branch that does not exist in the remote repository."
         },
-        "tag-push.publishDeletedBranch": {
+        "label-push.publishDeletedBranch": {
           "type": "string",
           "enum": [
             "Always",
@@ -102,7 +108,7 @@
           "default": "Suggest",
           "description": "Whether to publish the branch that was deleted in the remote repository."
         },
-        "tag-push.addStaged": {
+        "label-push.addStaged": {
           "type": "string",
           "enum": [
             "Always",
@@ -135,14 +141,14 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/mocha": "^10.0.6",
-    "@types/node": "18.x",
+    "@types/node": "~18.19.18",
     "@types/vscode": "^1.85.0",
     "@vscode/test-cli": "^0.0.4",
-    "@vscode/test-electron": "^2.3.8",
-    "@vscode/vsce": "^2.23.0",
+    "@vscode/test-electron": "^2.3.9",
+    "@vscode/vsce": "^2.24.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
-    "webpack": "^5.90.1",
+    "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4"
   }
 }

@@ -1,20 +1,34 @@
 # Changelog
 
-All notable changes to the "tag-push" extension will be documented in this file.
+All notable changes to the "label-push" extension will be documented in this file.
 
-## [0.2.1] - 2024-01-24
+## [1.0.0] - 2024-02-25
+
+v1.0.0 released!
+
+The project was renamed to "Label Push", and was migrated to a monorepo project. The package size was reduced by 90% to 12KB thanks to the correct use of the `.vscodeignore` file for `vsce`.
+
+## Changed
+
+- The package was renamed to "Label Push", and all related configs.
+- Ask whether to create empty commits when there are no new commits locally, and save the choice to commitEmpty config.
+- Ask whether to add staged changes when create empty commits
+
+## Fixed
+
+- fix: add --allow-empty when amend
+
+## [0.2.1] - 2024-01-28
 
 ### Fixed
 
-fix: hide terminal
+- fix: hide terminal
 
 ### Changed
 
-fix: check staging area only when have new commits
+- fix: check staging area only when have new commits
 
 ## [0.2.0] - 2024-01-15
-
-### Changed
 
 Change version number to 0.2.0
 
@@ -22,12 +36,12 @@ Change version number to 0.2.0
 
 ### Added
 
-feat: add the status bar item
-feat: add a config about whether to commit empty, false by default
+- feat: add the status bar item
+- feat: add a config about whether to commit empty, false by default
 
 ### Fixed
 
-fix: remove outputChannel.show() every start
+- fix: remove outputChannel.show() every start
 
 ## [0.1.3] - 2024-01-12
 
@@ -60,9 +74,9 @@ First version of **Label Push**.
 
 ### Added
 
-- Add a tag to the latest commit's message and then push.
-- Create an empty commit with the tag when there are no new commits locally.
-- Set the words as the tag in the extension setting.
+- Add a label to the latest commit's message and then push.
+- Create an empty commit with the label when there are no new commits locally.
+- Set the words as the label in the extension setting.
 - Pull automatically when necessary.
 - Use git extension bundled in VS Code to detect local git repository.
 - Use termial to execute git commands.

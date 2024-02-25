@@ -4,8 +4,11 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "npm: watch - apps/vscode",
       "type": "npm",
-      "script": "compile",
+      "script": "watch",
+      "path": "apps/vscode",
+      "detail": "webpack --watch",
       "problemMatcher": "$ts-webpack-watch",
       "isBackground": true,
       "presentation": {
