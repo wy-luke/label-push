@@ -2,19 +2,17 @@
 
 All notable changes to the "label-push" extension will be documented in this file.
 
-## [0.2.1] - 2024-01-24
+## [0.2.1] - 2024-01-28
 
 ### Fixed
 
-fix: hide terminal
+- fix: hide terminal
 
 ### Changed
 
-fix: check staging area only when have new commits
+- fix: check staging area only when have new commits
 
 ## [0.2.0] - 2024-01-15
-
-### Changed
 
 Change version number to 0.2.0
 
@@ -22,12 +20,12 @@ Change version number to 0.2.0
 
 ### Added
 
-feat: add the status bar item
-feat: add a config about whether to commit empty, false by default
+- feat: add the status bar item
+- feat: add a config about whether to commit empty, false by default
 
 ### Fixed
 
-fix: remove outputChannel.show() every start
+- fix: remove outputChannel.show() every start
 
 ## [0.1.3] - 2024-01-12
 
