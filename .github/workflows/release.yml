@@ -42,9 +42,10 @@ jobs:
         with:
           script: |
             console.log(context)
-            const v = context.github.ref_name.substring(4)
-            console.log(v)
-            return v
+            console.log(context.github)
+            console.log(context.payload.ref)
+            console.log(context.ref)
+            return "v1.0.0"
           result-encoding: string
 
       - name: Release
