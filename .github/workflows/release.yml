@@ -36,13 +36,12 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
-      # - name: Get version
-      #   id: get-version
-      #   uses: actions/github-script@v7
-      #   with:
-      #     script: return String(context.ref).substring(14)
-      #     result-encoding: string
-      #     # use returned value with ${{ steps.get-version.outputs.result }}
+      - name: Get version
+        id: get-version
+        uses: actions/github-script@v7
+        with:
+          script: return String(context.ref).substring(14)
+          result-encoding: string
 
       - name: Release
         if: success()
@@ -52,6 +51,6 @@ jobs:
           automatic_release_tag: 'latest'
           draft: true
           prerelease: false
-          title: 'VS Code Extensinon ${{  github.ref_name }}'
+          title: 'VS Code Extensinon ${{ steps.get-version.outputs.result }}'
           files: |
             **/*.vsix
