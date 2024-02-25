@@ -25,39 +25,39 @@ export function activate(context: vscode.ExtensionContext) {
   if (!git) {
     vscode.window.showErrorMessage('没有找到Git插件，请检查是否禁用。')
     logger.log('The git extension not found', LogType.Error)
-    // outputChannel.show()
     return
   }
 
-  logger.log(`${git.repositories.length.toString()} repositories detected`)
-
   let currentRepo: Repository | null = null
-  if (git.repositories.length === 1) {
-    currentRepo = git.repositories[0]
-    logger.log(`Set git repository: ${currentRepo.rootUri}`)
-  } else if (git.repositories.length > 1) {
-    vscode.window.showErrorMessage('暂不支持同时打开多个Git仓库')
-    logger.log(`${git.repositories.length.toString()} repositories detected`, LogType.Error)
+
+  const setRepo = (repo: Repository) => {
+    logger.log(`${git.repositories.length.toString()} repositories detected`)
+
+    if (git.repositories.length === 1) {
+      currentRepo = repo
+      logger.log(`Set git repository: ${currentRepo.rootUri}`)
+    } else {
+      vscode.window.showErrorMessage('暂不支持同时打开多个Git仓库')
+      logger.log(`${git.repositories.length.toString()} repositories detected`, LogType.Error)
+    }
+  }
+
+  if (git.repositories.length >= 1) {
+    setRepo(git.repositories[0])
   } else {
     context.subscriptions.push(
       git.onDidOpenRepository((repo) => {
-        if (git.repositories.length > 1) {
-          vscode.window.showErrorMessage('暂不支持同时打开多个Git仓库')
-          logger.log(`${git.repositories.length.toString()} repositories detected`, LogType.Error)
-        } else if (git.repositories.length === 1) {
-          currentRepo = repo
-          logger.log(`Set git repository: ${currentRepo.rootUri}`)
-        }
+        setRepo(repo)
       }),
     )
   }
 
+  logger.log('Reading configurations......')
   let config = vscode.workspace.getConfiguration('label-push')
-  logger.log('Read configurations')
   vscode.workspace.onDidChangeConfiguration((e) => {
     if (e.affectsConfiguration('label-push')) {
+      logger.log('Configurations was changed......')
       config = vscode.workspace.getConfiguration('label-push')
-      logger.log('Configurations updated')
     }
   })
 
