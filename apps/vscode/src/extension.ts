@@ -65,6 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   let terminal: vscode.Terminal | null = null
 
+  // 注册命令
   let disposable = vscode.commands.registerCommand('label-push.labelPush', async () => {
     if (!currentRepo) {
       vscode.window.showErrorMessage('没有找到Git仓库，请检查当前目录。')
@@ -251,8 +252,9 @@ export function activate(context: vscode.ExtensionContext) {
         config.label
       }" ${pushOrNot ? '&& git push' : ''}`
     }
-    terminal.sendText(command)
+
     logger.log('Execute: ' + command)
+    terminal.sendText(command)
 
     // terminal.show()
 
