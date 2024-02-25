@@ -42,7 +42,7 @@ jobs:
         with:
           script: |
             console.log(context.ref)
-            return String(context.ref).subtring(14)
+            return String(context.ref).substring(14)
           result-encoding: string
 
       - name: Release
