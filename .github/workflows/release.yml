@@ -2,7 +2,7 @@ name: VSCode Extension Release
 
 on:
   push:
-    tags: [v*]
+    tags: [vsc-v*]
   workflow_dispatch:
 
 jobs:
