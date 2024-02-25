@@ -41,11 +41,8 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            console.log(context)
-            console.log(context.github)
-            console.log(context.payload.ref)
             console.log(context.ref)
-            return "v1.0.0"
+            return context.ref.subtring(15)
           result-encoding: string
 
       - name: Release
