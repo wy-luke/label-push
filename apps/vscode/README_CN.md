@@ -29,7 +29,7 @@
 
    ![Status Bar Menu](https://github.com/wy-luke/label-push/blob/main/apps/vscode/resources/status-bar.jpeg)
 
-3. 点击位于 Source Control 面板中的 Label Push 图标：:
+3. 点击位于 Source Control 面板中的 Label Push 图标:
 
    ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/label-push/main/apps/vscode/resources/menu-navigation.png)
 

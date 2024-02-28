@@ -25,7 +25,7 @@
 You have several ways to use **Label Push**:
 
 1. Open the Command Palette (Ctrl+Shift+P / ⌘+Shift+P) and type `Label Push`.
-2. Click "Label Push" in the status bar.
+2. Click "Label Push" in the status bar:
 
    ![Status Bar Menu](https://github.com/wy-luke/label-push/blob/main/apps/vscode/resources/status-bar.jpeg)
 
