@@ -20,6 +20,19 @@
 - You can choose whether to publish the branch that does not exist, or was deleted in the remote repository.
 - The label text is configurable.
 
+## Usage
+
+You have several ways to use **Label Push**:
+
+1. Open the Command Palette (Ctrl+Shift+P / ⌘+Shift+P) and type `Label Push`.
+2. Click "Label Push" in the status bar.
+
+   ![Status Bar Menu](https://github.com/wy-luke/label-push/blob/main/apps/vscode/resources/status-bar.jpeg)
+
+3. Click the Label Push icon in the Source Control view, as shown below:
+
+   ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/label-push/main/apps/vscode/resources/menu-navigation.png)
+
 ## Acknowledgements
 
 Thanks for the following projects, which inspired me a lot:

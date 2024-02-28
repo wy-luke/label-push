@@ -20,6 +20,19 @@
 - 可以选择是否发布分支，当远程分支不存在时
 - 标签文本可以自定义
 
+## 使用
+
+可以通过以下几种方法使用 **Label Push**:
+
+1. 打开 Command Palette (Ctrl+Shift+P / ⌘+Shift+P) 然后输入 `Label Push`
+2. 点击位于 VS Code 底部状态条的 "Label Push":
+
+   ![Status Bar Menu](https://github.com/wy-luke/label-push/blob/main/apps/vscode/resources/status-bar.jpeg)
+
+3. 点击位于 Source Control 面板中的 Label Push 图标：:
+
+   ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/label-push/main/apps/vscode/resources/menu-navigation.png)
+
 ## 致谢
 
 感谢以下项目，对我帮助很大:
