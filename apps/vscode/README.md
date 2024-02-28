@@ -26,13 +26,16 @@ You have several ways to use **Label Push**:
 
 1. Open the Command Palette (Ctrl+Shift+P / ⌘+Shift+P) and type `Label Push`.
 2. Click "Label Push" in the status bar.
-3. Click the "Label Push" icon in the Source Control view, as shown below:
+
+   ![Status Bar Menu](https://github.com/wy-luke/label-push/blob/main/apps/vscode/resources/status-bar.jpeg)
+
+3. Click the Label Push icon in the Source Control view, as shown below:
 
    ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/label-push/main/apps/vscode/resources/menu-navigation.png)
 
 ## Extension Settings
 
-- Tag: The label text to be added to the commit message.
+- Label: The label text to be added to the commit message.
 
   - type: `string`
   - default: `[build]`
