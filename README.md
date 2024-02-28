@@ -1,5 +1,9 @@
 # Monorepo for Label Push
 
+<p align="left">
+    <a href="./README_CN.md">中文</a> &nbsp ｜ &nbsp English
+</p>
+
 [![Auto Release](https://github.com/wy-luke/label-push/actions/workflows/release.yml/badge.svg)](https://github.com/wy-luke/label-push/actions/workflows/release.yml)
 [![Auto Publish](https://github.com/wy-luke/label-push/actions/workflows/publish.yml/badge.svg)](https://github.com/wy-luke/label-push/actions/workflows/publish.yml)
 
@@ -15,10 +19,6 @@
 - You can choose whether to commit the changes already staged.
 - You can choose whether to publish the branch that does not exist, or was deleted in the remote repository.
 - The label text is configurable.
-
-## Release Notes
-
-Detailed Release Notes are available [here](CHANGELOG.md).
 
 ## Acknowledgements
 

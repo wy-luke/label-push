@@ -1,36 +1,32 @@
-# Label Push extension for Visual Studio Code
-
-<p align="left">
-    <a href="./README_CN.md">中文</a> &nbsp ｜ &nbsp English
-</p>
+# Monorepo for Label Push
 
 [![Auto Release](https://github.com/wy-luke/label-push/actions/workflows/release.yml/badge.svg)](https://github.com/wy-luke/label-push/actions/workflows/release.yml)
 [![Auto Publish](https://github.com/wy-luke/label-push/actions/workflows/publish.yml/badge.svg)](https://github.com/wy-luke/label-push/actions/workflows/publish.yml)
 
-**Label Push** could add a label text to your latest commit message and then push.
+**Label Push** 可以向最后一个 `commit message` 中添加指定标签文本，然后再 `push`
 
-> What for? E.g., you could add a "build" label to trigger the CI/CD Pipeline when you want.
+> 有什么用呢？比如：你可以设置标签文本为“build”，从而实现在需要的时候触发流水线。
 
-## Features
+## 特点
 
-- Add a label text to your latest commit message and then push.
-- Create an empty commit with the label text when there are no new commits locally.
-- Pull automatically if necessary to make sure the label is added to the latest commit.
-- You can choose whether to commit the changes already staged.
-- You can choose whether to publish the branch that does not exist, or was deleted in the remote repository.
-- The label text is configurable.
+- 向最后一个 `commit message` 中添加指定标签文本，然后再 `push`
+- 当本地没有新的提交时，创建一个空提交（`empty commit`）
+- 在添加标签文本前自动拉取（`pull`），确保标签被添加到最后一次提交
+- 可以选择是否提交当前已暂存更改
+- 可以选择是否发布分支，当远程分支不存在时
+- 标签文本可以自定义
 
-## Usage
+## 使用
 
-You have several ways to use **Label Push**:
+可以通过以下几种方法使用 **Label Push**:
 
-1. Open the Command Palette (Ctrl+Shift+P / ⌘+Shift+P) and type `Label Push`.
-2. Click "Label Push" in the status bar.
+1. 打开 Command Palette (Ctrl+Shift+P / ⌘+Shift+P) 然后输入 `Label Push`.
+2. 点击状态条上的 "Label Push".
 3. Click the "Label Push" icon in the Source Control view, as shown below:
 
    ![Souce Control View Navigation Menu](https://raw.githubusercontent.com/wy-luke/label-push/main/apps/vscode/resources/menu-navigation.png)
 
-## Extension Settings
+## 插件设置
 
 - Tag: The label text to be added to the commit message.
 
@@ -65,15 +61,15 @@ You have several ways to use **Label Push**:
   - enum: `[Always, Never, Suggest]`
   - default: `Suggest`
 
-## Release Notes
+## 发布
 
-Detailed Release Notes are available [here](CHANGELOG.md).
+详细发布信息可以[点击这里](CHANGELOG.md)查看。
 
-## Acknowledgements
+## 致谢
 
-Thanks for the following projects, which inspired me a lot:
+感谢以下项目，对我帮助很大:
 
 - [Git Graph](https://github.com/mhutchie/vscode-git-graph)
 - [Visual Studio Code](https://github.com/microsoft/vscode)
 
-The icons used are from [IconPark](https://github.com/bytedance/iconpark) from Bytedance.
+本项目的图标来自 [IconPark](https://github.com/bytedance/iconpark) from Bytedance.
