@@ -1,9 +1,9 @@
-package com.github.wyluke.labelpushjetbrains.services
+package com.github.wyluke.labelpush.services
 
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
-import com.github.wyluke.labelpushjetbrains.MyBundle
+import com.github.wyluke.labelpush.MyBundle
 
 @Service(Service.Level.PROJECT)
 class MyProjectService(project: Project) {

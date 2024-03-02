@@ -1,4 +1,4 @@
-package com.github.wyluke.labelpushjetbrains
+package com.github.wyluke.labelpush
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls

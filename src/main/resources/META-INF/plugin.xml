@@ -1,18 +1,28 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.wyluke.labelpushjetbrains</id>
-    <name>label-push-jetbrains Template</name>
+    <id>com.github.wyluke.labelpush</id>
+    <name>label-push</name>
     <vendor>wy-luke</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
+    <actions>
+        <action id="MyToolbarButton"
+            class="com.github.wyluke.labelpush.actions.MyToolbarAction"
+            text="My Button"
+            description="This is my custom button"
+            icon="AllIcons.General.Add">
+            <add-to-group group-id="ToolBarStandard" anchor="after" relative-to-action="SaveAll"/>
+        </action>
+    </actions>
+
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.wyluke.labelpushjetbrains.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <toolWindow factoryClass="com.github.wyluke.labelpush.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.wyluke.labelpushjetbrains.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener class="com.github.wyluke.labelpush.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
 </idea-plugin>

@@ -1,6 +1,6 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# label-push-jetbrains Changelog
+# label-push Changelog
 
 ## [Unreleased]
 ### Added

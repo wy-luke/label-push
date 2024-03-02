@@ -1,4 +1,4 @@
-package com.github.wyluke.labelpushjetbrains.listeners
+package com.github.wyluke.labelpush.listeners
 
 import com.intellij.openapi.application.ApplicationActivationListener
 import com.intellij.openapi.diagnostic.thisLogger

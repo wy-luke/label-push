@@ -1,4 +1,4 @@
-package com.github.wyluke.labelpushjetbrains.toolWindow
+package com.github.wyluke.labelpush.toolWindow
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.thisLogger
@@ -8,8 +8,8 @@ import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBPanel
 import com.intellij.ui.content.ContentFactory
-import com.github.wyluke.labelpushjetbrains.MyBundle
-import com.github.wyluke.labelpushjetbrains.services.MyProjectService
+import com.github.wyluke.labelpush.MyBundle
+import com.github.wyluke.labelpush.services.MyProjectService
 import javax.swing.JButton
 
 
