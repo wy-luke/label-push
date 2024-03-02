@@ -11,18 +11,25 @@
     <actions>
         <action id="MyToolbarButton"
             class="com.github.wyluke.labelpush.actions.MyToolbarAction"
-            text="My Button"
-            description="This is my custom button"
+            text="Label Push"
+            description="This is Label Push"
             icon="AllIcons.General.Add">
-            <add-to-group group-id="ToolBarStandard" anchor="after" relative-to-action="SaveAll"/>
+            <add-to-group group-id="ToolsMenu" anchor="last" /> <!-- 默认 anchor="last" -->
+            <override-text place="MainMenu" text="Label Push" />
+            <add-to-group group-id="NavBarVcsGroup" anchor="last" />
+            <add-to-group group-id="MainToolbarLeft" anchor="last" />
         </action>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.wyluke.labelpush.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <toolWindow factoryClass="com.github.wyluke.labelpush.toolWindow.MyToolWindowFactory" id="MyToolWindow" />
+        <notificationGroup id="Label Push Notifications"
+            displayType="BALLOON"
+        />
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.wyluke.labelpush.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener class="com.github.wyluke.labelpush.listeners.MyApplicationActivationListener"
+            topic="com.intellij.openapi.application.ApplicationActivationListener" />
     </applicationListeners>
 </idea-plugin>
