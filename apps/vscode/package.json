@@ -1,0 +1,154 @@
+{
+  "name": "label-push",
+  "displayName": "Label Push",
+  "version": "1.0.0",
+  "description": "Add a label text to your latest commit message and then push.",
+  "publisher": "wy-Luke",
+  "author": {
+    "name": "Luke",
+    "email": "wykj.luke@gmail.com"
+  },
+  "keywords": [
+    "labelPush",
+    "Label Push",
+    "git",
+    "push",
+    "commit",
+    "commit message",
+    "piplines",
+    "CI/CD",
+    "continuous integration",
+    "CI/CD piplines"
+  ],
+  "icon": "resources/icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/wy-luke/label-push",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wy-luke/label-push.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wy-luke/label-push/issues"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "label-push.labelPush",
+        "title": "Label Push",
+        "icon": {
+          "light": "resources/cmd-icon-light.svg",
+          "dark": "resources/cmd-icon-dark.svg"
+        }
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "when": "scmProvider == git",
+          "command": "label-push.labelPush",
+          "group": "navigation"
+        },
+        {
+          "when": "scmProvider == git",
+          "command": "label-push.labelPush",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Label Push",
+      "properties": {
+        "label-push.label": {
+          "type": "string",
+          "default": "[build]",
+          "description": "The label text to be added to the commit message."
+        },
+        "label-push.showStatusBarItem": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to show \"Label Push\" status bar item."
+        },
+        "label-push.commitEmpty": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never",
+            "Suggest"
+          ],
+          "default": "Suggest",
+          "description": "Whether to create an empty commit with the label when there are no new commits locally."
+        },
+        "label-push.publishBranch": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never",
+            "Suggest"
+          ],
+          "default": "Suggest",
+          "description": "Whether to publish the branch that does not exist in the remote repository."
+        },
+        "label-push.publishDeletedBranch": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never",
+            "Suggest"
+          ],
+          "default": "Suggest",
+          "description": "Whether to publish the branch that was deleted in the remote repository."
+        },
+        "label-push.addStaged": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never",
+            "Suggest"
+          ],
+          "default": "Suggest",
+          "description": "Whether to add the changes staged."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "lint": "eslint src --ext ts",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "test": "vscode-test",
+    "vscode:prepublish": "pnpm run package",
+    "vscpackage": "pnpm exec vsce package --no-dependencies",
+    "vscpublish": "pnpm exec vsce publish --no-dependencies"
+  },
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "~18.19.18",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.9",
+    "@vscode/vsce": "^2.24.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
+  }
+}
