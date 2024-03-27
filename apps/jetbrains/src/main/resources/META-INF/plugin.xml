@@ -1,0 +1,35 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.github.wyluke.labelpush</id>
+    <name>label-push</name>
+    <vendor>wy-luke</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <resource-bundle>messages.MyBundle</resource-bundle>
+
+    <actions>
+        <action id="MyToolbarButton"
+            class="com.github.wyluke.labelpush.actions.MyToolbarAction"
+            text="Label Push"
+            description="This is Label Push"
+            icon="AllIcons.General.Add">
+            <add-to-group group-id="ToolsMenu" anchor="last" /> <!-- 默认 anchor="last" -->
+            <override-text place="MainMenu" text="Label Push" />
+            <add-to-group group-id="NavBarVcsGroup" anchor="last" />
+            <add-to-group group-id="MainToolbarLeft" anchor="last" />
+        </action>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow factoryClass="com.github.wyluke.labelpush.toolWindow.MyToolWindowFactory" id="MyToolWindow" />
+        <notificationGroup id="Label Push Notifications"
+            displayType="BALLOON"
+        />
+    </extensions>
+
+    <applicationListeners>
+        <listener class="com.github.wyluke.labelpush.listeners.MyApplicationActivationListener"
+            topic="com.intellij.openapi.application.ApplicationActivationListener" />
+    </applicationListeners>
+</idea-plugin>
