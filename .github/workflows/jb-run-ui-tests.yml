@@ -7,7 +7,7 @@
 #
 # Workflow is triggered manually.
 
-name: Run UI Tests
+name: JetBrains Run UI Tests
 on: workflow_dispatch
 
 jobs:
