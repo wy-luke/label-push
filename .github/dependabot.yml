@@ -4,12 +4,12 @@
 version: 2
 updates:
   # Maintain dependencies for Gradle dependencies
-  - package-ecosystem: "gradle"
-    directory: "/"
+  - package-ecosystem: 'gradle'
+    directory: '/apps/jetbrains/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
   # Maintain dependencies for GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/apps/jetbrains/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
