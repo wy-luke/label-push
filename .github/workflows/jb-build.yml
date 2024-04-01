@@ -37,7 +37,7 @@ jobs:
       pluginVerifierHomeDir: ${{ steps.properties.outputs.pluginVerifierHomeDir }}
     defaults:
       run:
-        working-directory: /apps/jetbrains/
+        working-directory: ${{ github.workspace }}/apps/jetbrains/
     steps:
       # Check out current repository
       - name: Fetch Sources
@@ -107,7 +107,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: /apps/jetbrains/
+        working-directory: ${{ github.workspace }}/apps/jetbrains/
     steps:
       # Check out current repository
       - name: Fetch Sources
@@ -156,7 +156,7 @@ jobs:
       pull-requests: write
     defaults:
       run:
-        working-directory: /apps/jetbrains/
+        working-directory: ${{ github.workspace }}/apps/jetbrains/
     steps:
       # Free GitHub Actions Environment Disk Space
       - name: Maximize Build Space
@@ -189,7 +189,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: /apps/jetbrains/
+        working-directory: ${{ github.workspace }}/apps/jetbrains/
     steps:
       # Free GitHub Actions Environment Disk Space
       - name: Maximize Build Space
@@ -245,7 +245,7 @@ jobs:
       contents: write
     defaults:
       run:
-        working-directory: /apps/jetbrains/
+        working-directory: ${{ github.workspace }}/apps/jetbrains/
     steps:
       # Check out current repository
       - name: Fetch Sources
