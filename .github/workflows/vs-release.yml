@@ -1,0 +1,56 @@
+name: VSCode Extension Release
+
+on:
+  push:
+    tags: [vsc-v*]
+  workflow_dispatch:
+
+jobs:
+  auto-release:
+    name: Release
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install dependencies
+        run: pnpm install
+
+      # - name: Run tests
+      #   run: xvfb-run -a pnpm run test
+      #   if: runner.os == 'Linux'
+      - name: Run tests
+        run: pnpm run test
+        if: runner.os != 'Linux'
+
+      - name: Package
+        run: pnpm run vscpackage
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Get version
+        id: get-version
+        uses: actions/github-script@v7
+        with:
+          script: return String(context.ref).substring(14)
+          result-encoding: string
+
+      - name: Release
+        if: success()
+        uses: 'marvinpinto/action-automatic-releases@latest'
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          automatic_release_tag: 'latest'
+          draft: true
+          prerelease: false
+          title: 'VS Code Extensinon ${{ steps.get-version.outputs.result }}'
+          files: |
+            **/*.vsix

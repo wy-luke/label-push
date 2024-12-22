@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["./src/**/*.ts"],
+  "exclude": ["./src/git.d.ts"],
+  "compilerOptions": {
+    "sourceMap": true,
+    "rootDir": "src"
+  }
+}
