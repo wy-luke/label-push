@@ -1,9 +1,11 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["./src/**/*.ts"],
-  "exclude": ["./src/git.d.ts"],
+  "include": ["./src/**/*.ts", ".vscode-test.mjs"],
+  "exclude": [],
   "compilerOptions": {
     "sourceMap": true,
-    "rootDir": "src"
+    "rootDir": ".",
+    "verbatimModuleSyntax": false,
+    "isolatedModules": false
   }
 }

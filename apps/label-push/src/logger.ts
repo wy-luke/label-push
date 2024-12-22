@@ -1,17 +1,17 @@
-import { LogType } from './types'
-import * as vscode from 'vscode'
+import { LogType } from "./types";
+import * as vscode from "vscode";
 
 /**
  * Manages the Label Push Logger, which writes log information to the Label Push Output Channel.
  */
 export class Logger {
-  private readonly channel: vscode.OutputChannel
+  private readonly channel: vscode.OutputChannel;
 
   /**
    * Creates the Label Push Logger.
    */
   constructor() {
-    this.channel = vscode.window.createOutputChannel('Label Push')
+    this.channel = vscode.window.createOutputChannel("Label Push");
   }
 
   /**
@@ -20,11 +20,11 @@ export class Logger {
    * @param logType Type of the log: Info, Warn, Error.
    */
   public log(log: string, logType = LogType.Info) {
-    this.channel.appendLine(`[${getTimeStamp()}] [${logType}] > ${log}`)
+    this.channel.appendLine(`[${getTimeStamp()}] [${logType}] > ${log}`);
   }
 
   public show() {
-    this.channel.show()
+    this.channel.show();
   }
 }
 
@@ -32,22 +32,22 @@ export class Logger {
  * Get the current timestamp in the format 'YYYY-MM-DD HH:mm:ss.SSS'.
  */
 function getTimeStamp() {
-  const date = new Date()
+  const date = new Date();
   return (
-    date.getFullYear() +
-    '-' +
+    date.getFullYear().toString() +
+    "-" +
     pad2(date.getMonth() + 1) +
-    '-' +
+    "-" +
     pad2(date.getDate()) +
-    ' ' +
+    " " +
     pad2(date.getHours()) +
-    ':' +
+    ":" +
     pad2(date.getMinutes()) +
-    ':' +
+    ":" +
     pad2(date.getSeconds()) +
-    '.' +
+    "." +
     pad3(date.getMilliseconds())
-  )
+  );
 }
 
 /**
@@ -56,7 +56,7 @@ function getTimeStamp() {
  * @returns The padded number.
  */
 function pad2(n: number) {
-  return (n > 9 ? '' : '0') + n
+  return (n > 9 ? "" : "0") + n.toString();
 }
 
 /**
@@ -65,5 +65,5 @@ function pad2(n: number) {
  * @returns The padded number.
  */
 function pad3(n: number) {
-  return (n > 99 ? '' : n > 9 ? '0' : '00') + n
+  return (n > 99 ? "" : n > 9 ? "0" : "00") + n.toString();
 }
