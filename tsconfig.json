@@ -1,13 +1,41 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "_version": "22.0.0",
   "compilerOptions": {
-    "module": "Node16",
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+
     "target": "ES2022",
-    "lib": ["ES2022"],
-    "sourceMap": true,
-    "strict": true /* enable all strict type-checking options */
-    /* Additional Checks */
-    // "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
-    // "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
-    // "noUnusedParameters": true,  /* Report errors on unused parameters. */
-  }
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    /* If transpiling with TypeScript: */
+    // "module": "Node16",
+    // "outDir": "dist",
+    // "sourceMap": true,
+
+    /* AND if you're building for a library: */
+    // "declaration": true,
+
+    /* AND if you're building for a library in a monorepo: */
+    // "composite": true,
+    // "declarationMap": true,
+
+    /* If NOT transpiling with TypeScript: */
+    "module": "preserve",
+    "noEmit": true,
+
+    "lib": ["ES2022"]
+  },
+  // "include": [],
+  "exclude": ["**/webpack.config.js", "commitlint.config.js"]
 }

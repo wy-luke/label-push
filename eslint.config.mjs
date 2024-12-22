@@ -1,19 +1,13 @@
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import globals from "globals";
+import jslint from "@eslint/js";
+import tseslint from "typescript-eslint";
+import eslintConfigPrettier from "eslint-config-prettier";
 
+/** @type {import('eslint').Linter.Config[]} */
 export default [
+  { ignores: ["eslint.config.mjs", "commitlint.config.js"] },
+  { files: ["src/**/*.{js,mjs,cjs,ts}"] },
   {
-    files: ["**/*.ts"],
-  },
-  {
-    plugins: {
-      "@typescript-eslint": typescriptEslint,
-    },
-    languageOptions: {
-      parser: tsParser,
-      ecmaVersion: 2022,
-      sourceType: "module",
-    },
     rules: {
       "@typescript-eslint/naming-convention": [
         "warn",
@@ -28,4 +22,19 @@ export default [
       semi: "warn",
     },
   },
+  {
+    languageOptions: {
+      globals: globals.node,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+      ecmaVersion: 2022,
+      sourceType: "module",
+    },
+  },
+  jslint.configs.recommended,
+  // ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.strictTypeChecked,
+  eslintConfigPrettier,
 ];
