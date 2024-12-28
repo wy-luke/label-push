@@ -78,6 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     let pushOrNot = true;
     let addStagedOrNot = false;
+    let haveUpstream = true;
     let command: string = "";
 
     const state = currentRepo.state;
@@ -102,6 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // 无远程分支
     if (!state.HEAD?.upstream) {
+      haveUpstream = false;
       if (config.publishBranch === ConfigOptions.Suggest) {
         const pick = await showDialog("当前分支未设置远程分支，是否直接推送？", config, "publishBranch");
         if (pick === DialogPick.Cancel) {
@@ -205,10 +207,19 @@ export function activate(context: vscode.ExtensionContext) {
       //   }
       // }
 
+      let pushBranch = "";
+      if (!haveUpstream) {
+        const name = state.remotes[0]?.name || "";
+        const branchName = state.HEAD?.name || "";
+        pushBranch = `-u ${name} ${branchName}`;
+      }
+
+      const pushCommand = pushOrNot ? `&& git push ${pushBranch}` : "";
+
       // 上一个提交为empty时，不加--allow-empty无法进行修改
       command = `git commit --allow-empty --amend ${
         addStagedOrNot ? "" : "-o"
-      } -m"$(git log --format=%B -n1)" -m"${config.label as string}" ${pushOrNot ? "&& git push" : ""}`;
+      } -m"$(git log --format=%B -n1)" -m"${config.label as string}" ${pushCommand}`;
     } else {
       // 本地无新的提交
       logger.log("There are no new commits locally");
