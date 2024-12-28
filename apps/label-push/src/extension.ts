@@ -24,30 +24,33 @@ export function activate(context: vscode.ExtensionContext) {
   const git = gitExtension?.getAPI(1);
   if (!git) {
     vscode.window.showErrorMessage("没有找到Git插件，请检查是否禁用。");
-    logger.log("The git extension not found", LogType.Error);
+    logger.log("The Git extension not found", LogType.Error);
     return;
   }
 
   let currentRepo: Repository | null = null;
 
-  const setRepo = (repo: Repository) => {
-    logger.log(`${git.repositories.length.toString()} repositories detected`);
+  const setRepo = () => {
+    if (git.repositories.length === 0) {
+      logger.log("No git repository found", LogType.Error);
+      return;
+    }
 
-    if (git.repositories.length === 1) {
-      currentRepo = repo;
-      logger.log(`Set git repository: ${currentRepo.rootUri.fsPath}`);
-    } else {
-      vscode.window.showErrorMessage("暂不支持同时打开多个Git仓库");
-      logger.log(`${git.repositories.length.toString()} repositories detected`, LogType.Error);
+    const repo = git.repositories[0] as Repository;
+    currentRepo = repo;
+    logger.log(`Set git repository: ${currentRepo.rootUri.fsPath}`);
+
+    if (git.repositories.length > 1) {
+      logger.log("Multiple repositories detected", LogType.Warn);
     }
   };
 
   if (git.repositories.length >= 1) {
-    setRepo(git.repositories[0] as Repository);
+    setRepo();
   } else {
     context.subscriptions.push(
-      git.onDidOpenRepository((repo) => {
-        setRepo(repo);
+      git.onDidOpenRepository(() => {
+        setRepo();
       }),
     );
   }
@@ -254,20 +257,20 @@ async function showDialog(message: string, config: vscode.WorkspaceConfiguration
     { title: "Yes" },
     { title: "No" },
     { title: "Don't show again" },
-    { title: "Cancle", isCloseAffordance: true },
+    { title: "Cancel", isCloseAffordance: true },
   ];
   const messageOptions: vscode.MessageOptions = { modal: true, detail: detail };
 
   const pick = (await vscode.window.showWarningMessage(message, messageOptions, ...buttonOptions)) || {
-    title: "Cancle",
+    title: "Cancel",
   };
 
   if (pick.title === "Don't show again") {
-    const buttonOptions = [{ title: "Always" }, { title: "Never" }, { title: "Cancle", isCloseAffordance: true }];
+    const buttonOptions = [{ title: "Always" }, { title: "Never" }, { title: "Cancel", isCloseAffordance: true }];
     const messageOptions: vscode.MessageOptions = { modal: true };
 
     const pick = (await vscode.window.showWarningMessage("请选择默认方式", messageOptions, ...buttonOptions)) || {
-      title: "Cancle",
+      title: "Cancel",
     };
 
     if (pick.title === "Always") {
